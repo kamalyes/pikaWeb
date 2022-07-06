@@ -81,12 +81,12 @@ const BaseView = ({user, loading, dispatch}) => {
                   children: '更新基本信息',
                 },
               }}
-              initialValues={{...currentUser, phone: currentUser?.phone}}
+              initialValues={{...currentUser, mobile: currentUser?.mobile}}
               hideRequiredMark
             >
               <ProFormText
                 width="md"
-                name="name"
+                name="username"
                 label="姓名"
                 rules={[
                   {
@@ -108,7 +108,7 @@ const BaseView = ({user, loading, dispatch}) => {
               />
               <ProFormText
                 width="md"
-                name="phone"
+                name="mobile"
                 label="联系电话"
                 placeholder="输入电话后可接收钉钉/企业微信通知哦"
                 rules={[

@@ -21,7 +21,7 @@ const shiftDate = (date, numDays) => {
 
 const Workspace = ({user, dispatch}) => {
   const params = useParams();
-  const userId = params.user_id;
+  const userId = params.uid;
   const {userMap, operationLog, activities} = user;
 
   const getContent = currentUser => {
@@ -37,10 +37,10 @@ const Workspace = ({user, dispatch}) => {
           </div>
           <div className={styles.content}>
             <div className={styles.contentTitle}>
-              {currentUser.username} {currentUser.deleted_at ? "(已注销)" : null}
+              {currentUser.username} {currentUser.delete_date ? "(已注销)" : null}
             </div>
             <div>
-              {currentUser.email} {currentUser.nickname}
+              {currentUser.email} {currentUser.alias}
             </div>
             <div className={styles.lastLogin}>
               <span>上次登录</span> {currentUser.last_login_at}
