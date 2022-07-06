@@ -32,6 +32,9 @@ const Login = (props) => {
   const [type, setType] = useState('account');
   const intl = useIntl();
   const [form] = Form.useForm();
+  // const username = Form.useWatch('username',form);
+  // console.log(form,'form');
+  // console.log(username,'username')
 
   const handleSubmit = (values) => {
     const {dispatch} = props;
@@ -60,12 +63,12 @@ const Login = (props) => {
     // const current = window.location.href
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}`
   }
-
-  const handleEnterKey = (e) => {
-    if (e.nativeEvent.keyCode === 13) { //e.nativeEvent获取原生的事件对像
-      handleSubmit()
-    }
-  }
+  //
+  // const handleEnterKey = (e) => {
+  //   if (e.nativeEvent.keyCode === 13) { //e.nativeEvent获取原生的事件对像
+  //     handleSubmit()
+  //   }
+  // }
 
   return (
     <div className={styles.main}>

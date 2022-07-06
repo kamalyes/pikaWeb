@@ -1,14 +1,6 @@
 import request from '@/utils/request';
 import {CONFIG} from '@/consts/config';
 import convterJsonToFromData from "@/utils/hander";
-
-export async function fakeAccountLogin(params) {
-  return request('/api/login/account', {
-    method: 'POST',
-    data: params,
-  });
-}
-
 export async function login(params) {
   return request(`${CONFIG.URL}/user/login`, {
     method: 'POST',

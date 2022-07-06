@@ -1,7 +1,6 @@
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
 import {extend} from 'umi-request';
 import {message, notification} from 'antd';
-import auth from "@/utils/auth";
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -78,7 +77,7 @@ request.interceptors.response.use(async (response, options) => {
   const {url, status} = response;
   console.log("接口返回参数：response：", response)
   const data = await response.clone().json();
-  const parse_status = parseInt(status / 100)
+  const parse_status = +(status / 100);
   console.log("接口返回的response_data：\n", data);
 
   if (parse_status === 2 && status % 100 > 0) {
@@ -99,18 +98,15 @@ request.interceptors.response.use(async (response, options) => {
     }
     message.info(data.detail);
   }
-
-  if (data.code !== 0 && status !== 422) {
+  let ignore_status = [422, 200];
+  // console.log("ignore_status", ignore_status)
+  if (data.code !== 200 && ignore_status.indexOf(+status) !== -1) {
     notification.error({
       message: data.detail,
     });
   }
 
-  if (data.code && status === 422) {
-    notification.error({
-      message: data.detail,
-    });
-  } else if (status === 422) {
+  if (status === 422) {
     notification.error({
       message: `请求错误 [${status}]: ${url}`,
     });

@@ -24,7 +24,7 @@ const getUserMap = data => {
   const userNameMap = {}
   data.forEach(item => {
     temp[item.id] = item
-    userNameMap[item.id] = item.name
+    userNameMap[item.id] = item.username
   })
   return {userMap: temp, userNameMap};
 }
@@ -60,26 +60,22 @@ const UserModel = {
 
     * fetchUserActivities({payload}, {call, put}) {
       const res = yield call(listUserActivities, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            activities: res.data,
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          activities: res.data,
+        }
+      })
     },
 
     * fetchUserRecord({payload}, {call, put}) {
       const res = yield call(listUserOperationLog, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            operationLog: res.data,
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          operationLog: res.data,
+        }
+      })
     },
 
     * updateUser({payload}, {call, put}) {
@@ -145,33 +141,29 @@ const UserModel = {
 
     * avatar({payload}, {call, put}) {
       const res = yield call(updateAvatar, payload)
-      if (auth.response(res, true)) {
-        const pikaUser = localStorage.getItem("pikaUser")
-        const info = JSON.parse(pikaUser)
-        info.avatar = res.result;
-        localStorage.setItem("pikaUser", JSON.stringify(info))
-        yield put({
-          type: 'saveCurrentUser',
-          payload: info,
-        });
-      }
+      const pikaUser = localStorage.getItem("pikaUser")
+      const info = JSON.parse(pikaUser)
+      info.avatar = res.result;
+      localStorage.setItem("pikaUser", JSON.stringify(info))
+      yield put({
+        type: 'saveCurrentUser',
+        payload: info,
+      });
     },
 
     * queryUserStatistics(_, {call, put}) {
       const response = yield call(queryUserStatistics);
-      if (auth.response(response)) {
-        yield put({
-          type: 'save',
-          payload: {
-            project_count: response.result.project_count,
-            case_count: response.result.case_count,
-            user_rank: response.result.user_rank,
-            total_user: response.result.total_user,
-            weekly_case: response.result.weekly_case,
+      yield put({
+        type: 'save',
+        payload: {
+          project_count: response.result.project_count,
+          case_count: response.result.case_count,
+          user_rank: response.result.user_rank,
+          total_user: response.result.total_user,
+          weekly_case: response.result.weekly_case,
 
-          },
-        });
-      }
+        },
+      });
     },
 
     /**
@@ -183,14 +175,12 @@ const UserModel = {
      */
     * queryFollowTestPlanData(_, {call, put}) {
       const response = yield call(queryFollowTestPlanData);
-      if (auth.response(response)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             followPlan: response.result,
           },
         });
-      }
     },
 
 
@@ -209,9 +199,9 @@ const UserModel = {
       }
       const response = yield call(queryCurrent, {token, emp_no});
       yield put({
-          type: 'saveCurrentUser',
-          payload: response.result,
-        });
+        type: 'saveCurrentUser',
+        payload: response.result,
+      });
       // if (auth.response(response)) {
       //   yield put({
       //     type: 'saveCurrentUser',
