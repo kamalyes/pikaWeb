@@ -1,6 +1,7 @@
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
 import {extend} from 'umi-request';
-import {notification} from 'antd';
+import {message, notification} from 'antd';
+import auth from "@/utils/auth";
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -32,22 +33,13 @@ const errorHandler = (error) => {
     if (url.indexOf('?') !== -1) {
       noParamUrl = url.substring(0, url.indexOf('?'));
     }
-
-    // 如果调用接口去获取token报错,则证明是账号有误
-    if (status === 401) {
-      notification.warn({
-        message: '请重新登陆!',
+    if (process.env.NODE_ENV === 'development' && status !== 422) {
+      notification.error({
+        message: `请求错误 [${status}]: ${noParamUrl}`,
+        description: errorText,
       });
-      history.push('/#/user/login');
-    } else {
-      if (process.env.NODE_ENV === 'development') {
-        notification.error({
-          message: `请求错误 [${status}]: ${noParamUrl}`,
-          description: errorText,
-        });
-      }
-      // throw new Error("请求错误");
     }
+    // throw new Error("请求错误");
   } else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
@@ -75,9 +67,6 @@ request.interceptors.request.use((url, options) => {
     url,
     options: {
       ...options,
-      // headers: {
-      //   Authorization: getAccessToken(),
-      // },
     },
   };
 });
@@ -88,34 +77,45 @@ request.interceptors.request.use((url, options) => {
 request.interceptors.response.use(async (response, options) => {
   const {url, status} = response;
   console.log("接口返回参数：response：", response)
-  // 获取token的接口,正确返回直接放过
-  // if (url.indexOf('/system/oauth/token') !== -1) {
-  //   return response;
-  // }
-
-  // 返回下载流的问题,可以在url添加标识
-  // if (url.indexOf('/download/') !== -1) {
-  //   if (status !== 200) {
-  //     notification.error({
-  //       message: `下载出错 : ${url}`,
-  //     });
-  //   } else {
-  //     return await response.clone().blob();
-  //   }
-  //   return null;
-  // }
   const data = await response.clone().json();
+  const parse_status = parseInt(status / 100)
   console.log("接口返回的response_data：\n", data);
 
-  if (parseInt(status / 100) === 2 && status % 100 > 0) {
+  if (parse_status === 2 && status % 100 > 0) {
     return undefined
   }
-  if ((parseInt(status / 100) !== 2 && data.code !== 0 && status !== 422)) {
+
+  if (status === 401) {
+    localStorage.removeItem("pikaToken");
+    localStorage.removeItem("pikaUser");
+    localStorage.removeItem("pikaEmpNo");
+    localStorage.removeItem("pikaUserName");
+    localStorage.removeItem("PikaAuthority");
+    const href = window.location.href;
+    if (href.indexOf("/user/login") === -1) {
+      const uri = href.split("redirect=")
+      window.location.href = `/#/user/login?redirect=${uri[uri.length - 1]}`
+      // window.open(`/#/user/login?redirect=${href}`)
+    }
+    message.info(data.detail);
+  }
+
+  if (data.code !== 0 && status !== 422) {
     notification.error({
       message: data.detail,
     });
   }
-  return response;
+
+  if (data.code && status === 422) {
+    notification.error({
+      message: data.detail,
+    });
+  } else if (status === 422) {
+    notification.error({
+      message: `请求错误 [${status}]: ${url}`,
+    });
+  }
+  return response
 });
 
 export default request;

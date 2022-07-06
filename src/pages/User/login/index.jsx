@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 import ProForm, {ProFormCaptcha, ProFormCheckbox, ProFormText} from '@ant-design/pro-form';
 import {connect, FormattedMessage, useIntl} from 'umi';
 import styles from './index.less';
-import {getDynamicCode} from "@/services/login";
+import {getElCode} from "@/services/login";
 
 const clientId = `0f4fc0a875de30614a6a`;
 
@@ -41,7 +41,7 @@ const Login = (props) => {
         payload: {
           username: values.username,
           password: values.password,
-          dynamic_code: values.dynamic_code,
+          // dynamic_code: values.dynamic_code,
           emp_no: values.username,
           email: values.email,
           grant_type: "account",
@@ -228,7 +228,7 @@ const Login = (props) => {
               ]}
             />
             <ProFormCaptcha
-              name="dynamic_code"
+              name="el_code"
               fieldProps={{
                 size: 'large',
                 style: {borderRadius: "5px"},
@@ -267,7 +267,7 @@ const Login = (props) => {
                   return;
                 }
                 const values = form.getFieldsValue();
-                await getDynamicCode({
+                await getElCode({
                   email: values.email,
                   "model": 3,
                 })

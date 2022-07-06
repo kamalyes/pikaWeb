@@ -7,9 +7,13 @@ export async function query() {
 }
 
 export async function queryCurrent(params) {
-  return await request(`${CONFIG.URL}/auth/query`, {
-    method: 'GET',
-    params,
+  const {emp_no, ...params_copy} = params;
+  return await request(`${CONFIG.URL}/user/verifytoken`, {
+    method: 'POST',
+    headers: {
+      ...params_copy,
+      'emp-no': emp_no
+    },
   })
 }
 

@@ -22,7 +22,7 @@ class AvatarDropdown extends React.Component {
     }
 
     if (key === 'center') {
-      history.push(`/member/${this.props.currentUser.id}`);
+      history.push(`/member/${this.props.currentUser.uid}`);
       return;
     }
 

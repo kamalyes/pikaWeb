@@ -148,7 +148,7 @@ const UserModel = {
       if (auth.response(res, true)) {
         const pikaUser = localStorage.getItem("pikaUser")
         const info = JSON.parse(pikaUser)
-        info.avatar = res.data;
+        info.avatar = res.result;
         localStorage.setItem("pikaUser", JSON.stringify(info))
         yield put({
           type: 'saveCurrentUser',
@@ -163,11 +163,11 @@ const UserModel = {
         yield put({
           type: 'save',
           payload: {
-            project_count: response.data.project_count,
-            case_count: response.data.case_count,
-            user_rank: response.data.user_rank,
-            total_user: response.data.total_user,
-            weekly_case: response.data.weekly_case,
+            project_count: response.result.project_count,
+            case_count: response.result.case_count,
+            user_rank: response.result.user_rank,
+            total_user: response.result.total_user,
+            weekly_case: response.result.weekly_case,
 
           },
         });
@@ -187,7 +187,7 @@ const UserModel = {
         yield put({
           type: 'save',
           payload: {
-            followPlan: response.data,
+            followPlan: response.result,
           },
         });
       }
@@ -196,7 +196,7 @@ const UserModel = {
 
     * fetchCurrent(_, {call, put}) {
       const token = localStorage.getItem("pikaToken")
-      // const userInfo = localStorage.getItem("pikaUser")
+      const emp_no = localStorage.getItem("pikaEmpNo")
       if (token === null || token === '') {
         history.push("/#/user/login");
         history.replace({
@@ -207,23 +207,29 @@ const UserModel = {
         });
         return;
       }
-      const response = yield call(queryCurrent, {token});
-      if (auth.response(response)) {
-        yield put({
+      const response = yield call(queryCurrent, {token, emp_no});
+      yield put({
           type: 'saveCurrentUser',
-          payload: response.data,
+          payload: response.result,
         });
-      } else {
-        localStorage.removeItem("pikaToken")
-        localStorage.removeItem("pikaUser")
-        history.push("/#/user/login");
-        history.replace({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        });
-      }
+      // if (auth.response(response)) {
+      //   yield put({
+      //     type: 'saveCurrentUser',
+      //     payload: response.result,
+      //   });
+      // } else {
+      //   localStorage.removeItem("pikaToken")
+      //   localStorage.removeItem('pikaUser');
+      //   localStorage.removeItem("pikaUserName")
+      //   localStorage.removeItem("pikaEmpNo")
+      //   history.push("/#/user/login");
+      //   history.replace({
+      //     pathname: '/user/login',
+      //     search: stringify({
+      //       redirect: window.location.href,
+      //     }),
+      //   });
+      // }
     },
   },
   reducers: {

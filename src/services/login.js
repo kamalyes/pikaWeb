@@ -26,7 +26,7 @@ export async function register(params) {
   });
 }
 
-export async function getDynamicCode(params) {
+export async function getElCode(params) {
   return request(`${CONFIG.URL}/user/auth/elcode`, {
     method: 'POST',
     data: params,

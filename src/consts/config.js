@@ -15,14 +15,14 @@ const getUrl = () => {
   if (defaultSettings.apiUrl !== null) {
     return defaultSettings.apiUrl;
   }
-  return dev ? 'http://localhost:7777' : 'https://api.pika.fun'
+  return dev ? 'http://localhost:7780' : 'https://api.pika.fun'
 }
 
 const getWss = () => {
   if (defaultSettings.wssUrl) {
     return defaultSettings.wssUrl;
   }
-  return dev ? 'ws://127.0.0.1:7777/ws' : 'wss://api.pika.fun/ws'
+  return dev ? 'ws://127.0.0.1:7780/ws' : 'wss://api.pika.fun/ws'
 }
 
 export const CONFIG = {

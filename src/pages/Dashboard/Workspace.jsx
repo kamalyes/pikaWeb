@@ -41,11 +41,11 @@ const getContent = currentUser => {
     <div className={styles.pageHeaderContent}>
       <div className={styles.avatar}>
         <Avatar size="large"
-                src={currentUser.avatar || `https://joeschmoe.io/api/v1/${currentUser.name}`}/>
+                src={currentUser.avatar || `https://joeschmoe.io/api/v1/${currentUser.username}`}/>
       </div>
       <div className={styles.content}>
         <div className={styles.contentTitle}>
-          {getWelcome(currentUser.name)}
+          {getWelcome(currentUser.username)}
         </div>
         <div>
           {currentUser.email} {currentUser.nickname}

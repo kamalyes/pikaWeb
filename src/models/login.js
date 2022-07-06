@@ -18,7 +18,7 @@ const Model = {
         password: payload.password,
         name: payload.name,
         email: payload.email,
-        dynamic_code: payload.dynamic_code,
+        el_code: payload.el_code,
       });
       payload.setType('account');
       message.success(response.message);
@@ -65,6 +65,9 @@ const Model = {
       if (window.location.pathname !== '/#/user/login' && !redirect) {
         localStorage.removeItem("pikaToken");
         localStorage.removeItem("pikaUser");
+        localStorage.removeItem("pikaEmpNo");
+        localStorage.removeItem("pikaUserName");
+        localStorage.removeItem("PikaAuthority");
         history.replace({
           pathname: '/user/login',
           search: stringify({
@@ -77,10 +80,11 @@ const Model = {
   reducers: {
     changeLoginStatus(state, {payload}) {
       // 写入用户信息
-      localStorage.setItem('pikaToken', payload.data.token);
-      localStorage.setItem('pikaUser', JSON.stringify(payload.data.user));
-      // setAuthority(payload.currentAuthority);
-      setAuthority(CONFIG.ROLE[payload.data.user.role]);
+      localStorage.setItem('pikaUser', JSON.stringify(payload.result));
+      localStorage.setItem('pikaToken', payload.result.token);
+      localStorage.setItem('pikaUserName', payload.result.username);
+      localStorage.setItem('pikaEmpNo', payload.result.emp_no);
+      setAuthority(CONFIG.ROLE[payload.result.identity]);
       return {...state, status: payload.code === 200 ? 'ok' : 'error', type: 'account'};
     },
   },

@@ -86,7 +86,7 @@ const Workspace = ({user, dispatch}) => {
       return 0;
     }
     const now = Date.parse(new Date());
-    const register_time = Date.parse(new Date(currentUser.created_at));
+    const register_time = Date.parse(new Date(currentUser.create_date));
     return Math.abs(parseInt((now - register_time) / 1000 / 3600 / 24))
   }
 
