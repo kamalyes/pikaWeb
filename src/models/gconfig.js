@@ -15,7 +15,6 @@ import {
   listGateway,
   listGConfig,
   listRedisConfig,
-  onlineRedisCommand,
   onTestDbConfig,
   updateDbConfig,
   updateGateway,
@@ -24,6 +23,7 @@ import {
   updateSystemConfig,
   uploadFile
 } from '@/services/configure';
+import  {onlineRedisCommand} from '@/services/online';
 import auth from '@/utils/auth';
 import {message} from 'antd';
 
@@ -235,10 +235,6 @@ export default {
 
     * fetchEnvList({payload}, {call, put}) {
       const res = yield call(listEnvironment, payload);
-      if (!auth.response(res)) {
-        message.error(res.detail);
-        return;
-      }
       const envMap = {};
       res.data.forEach(v => {
         envMap[v.id] = v.name;
@@ -254,10 +250,6 @@ export default {
 
     * fetchRedisConfig({payload}, {call, put}) {
       const res = yield call(listRedisConfig, payload);
-      if (!auth.response(res)) {
-        message.error(res.detail);
-        return;
-      }
       yield put({
         type: 'save',
         payload: {
@@ -275,10 +267,6 @@ export default {
      */
     * fetchAddress({payload}, {call, put}) {
       const res = yield call(listGateway, payload);
-      if (!auth.response(res)) {
-        message.error(res.detail);
-        return;
-      }
       yield put({
         type: 'save',
         payload: {
@@ -289,27 +277,16 @@ export default {
 
     * insertAddress({payload}, {call, put}) {
       const res = yield call(insertGateway, payload);
-      if (!auth.response(res, true)) {
-        message.error(res.detail);
-        return false;
-      }
       return true;
     },
 
     * updateAddress({payload}, {call, put}) {
       const res = yield call(updateGateway, payload);
-      if (!auth.response(res, true)) {
-        return false;
-      }
       return true;
     },
 
     * deleteAddress({payload}, {call, put}) {
       const res = yield call(deleteGateway, payload);
-      if (!auth.response(res, true)) {
-        message.error(res.detail);
-        return false;
-      }
       return true;
     },
 

@@ -153,7 +153,7 @@ const RedisOnline = ({dispatch, gconfig}) => {
 
   const onlineRedis = async command => {
     return await dispatch({
-      type: 'gconfig/onlineRedisCommand',
+      type: 'online/onlineRedisCommand',
       payload: {
         id: currentRedis,
         command,

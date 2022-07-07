@@ -40,34 +40,32 @@ export default {
   effects: {
     * listTestPlan({payload}, {call, put}) {
       const res = yield call(listTestPlan, payload);
-      if (auth.response(res)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             planData: res.data,
           }
         })
-      }
     },
 
     * insertTestPlan({payload}, {call, put}) {
       const res = yield call(insertTestPlan, payload);
-      return auth.response(res, true);
+      return true;
     },
 
     * updateTestPlan({payload}, {call}) {
       const res = yield call(updateTestPlan, payload);
-      return auth.response(res, true)
+      return true
     },
 
     * deleteTestPlan({payload}, {call}) {
       const res = yield call(deleteTestPlan, payload);
-      return auth.response(res, true)
+      return true
     },
 
     * executeTestPlan({payload}, {call}) {
       const res = yield call(executeTestPlan, payload);
-      return auth.response(res)
+      return  null
     },
 
     /**
@@ -78,7 +76,7 @@ export default {
      */
     * followTestPlan({payload}, {call}) {
       const res = yield call(followTestPlan, payload);
-      return auth.response(res, true)
+      return true
     },
 
     /**
@@ -89,7 +87,7 @@ export default {
      */
     * unFollowTestPlan({payload}, {call}) {
       const res = yield call(unFollowTestPlan, payload);
-      return auth.response(res, true)
+      return true
     },
 
     * listTestCaseTreeWithProjectId({payload}, {call, put}) {

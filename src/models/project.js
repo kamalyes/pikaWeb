@@ -27,8 +27,7 @@ export default {
   effects: {
     * listProject({payload}, {call, put, select}) {
       const res = yield call(listProject, {page: 1, size: 10000});
-      if (auth.response(res)) {
-        const projects = {}
+      const projects = {}
         res.data.forEach(item => {
           projects[item.id] = item.name;
         })
@@ -44,20 +43,16 @@ export default {
             project_id: projId,
           }
         })
-      }
-    },
+      },
 
     * uploadFile({payload}, {call, put}) {
       const res = yield call(updateAvatar, payload)
-      if (auth.response(res, true)) {
-        return res.data;
-      }
       return null;
     },
 
     * deleteProject({payload}, {call, put}) {
       const res = yield call(deleteProject, payload)
-      return auth.response(res, true);
+      return true;
     },
 
   },

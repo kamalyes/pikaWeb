@@ -35,7 +35,7 @@ const RedisConstructor = ({form, dispatch, construct, gconfig, suffix}) => {
       return;
     }
     const data = await dispatch({
-      type: 'gconfig/onlineRedisCommand',
+      type: 'online/onlineRedisCommand',
       payload: {
         id: currentId,
         command,

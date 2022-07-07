@@ -143,7 +143,7 @@ const UserModel = {
       const res = yield call(updateAvatar, payload)
       const pikaUser = localStorage.getItem("pikaUser")
       const info = JSON.parse(pikaUser)
-      info.avatar = res.result;
+      info.avatar = res.data;
       localStorage.setItem("pikaUser", JSON.stringify(info))
       yield put({
         type: 'saveCurrentUser',
@@ -156,11 +156,11 @@ const UserModel = {
       yield put({
         type: 'save',
         payload: {
-          project_count: response.result.project_count,
-          case_count: response.result.case_count,
-          user_rank: response.result.user_rank,
-          total_user: response.result.total_user,
-          weekly_case: response.result.weekly_case,
+          project_count: response.data.project_count,
+          case_count: response.data.case_count,
+          user_rank: response.data.user_rank,
+          total_user: response.data.total_user,
+          weekly_case: response.data.weekly_case,
 
         },
       });
@@ -178,7 +178,7 @@ const UserModel = {
       yield put({
           type: 'save',
           payload: {
-            followPlan: response.result,
+            followPlan: response.data,
           },
         });
     },
@@ -200,7 +200,7 @@ const UserModel = {
       const response = yield call(queryCurrent, {token, emp_no});
       yield put({
         type: 'saveCurrentUser',
-        payload: response.result,
+        payload: response.data,
       });
       // if (auth.response(response)) {
       //   yield put({

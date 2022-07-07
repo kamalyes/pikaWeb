@@ -80,11 +80,11 @@ const Model = {
   reducers: {
     changeLoginStatus(state, {payload}) {
       // 写入用户信息
-      localStorage.setItem('pikaUser', JSON.stringify(payload.result));
-      localStorage.setItem('pikaToken', payload.result.token);
-      localStorage.setItem('pikaUserName', payload.result.username);
-      localStorage.setItem('pikaEmpNo', payload.result.emp_no);
-      setAuthority(CONFIG.ROLE[payload.result.identity]);
+      localStorage.setItem('pikaUser', JSON.stringify(payload.data));
+      localStorage.setItem('pikaToken', payload.data.token);
+      localStorage.setItem('pikaUserName', payload.data.username);
+      localStorage.setItem('pikaEmpNo', payload.data.emp_no);
+      setAuthority(CONFIG.ROLE[payload.data.identity]);
       return {...state, status: payload.code === 200 ? 'ok' : 'error', type: 'account'};
     },
   },

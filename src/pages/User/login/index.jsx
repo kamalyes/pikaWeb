@@ -75,6 +75,8 @@ const Login = (props) => {
       <ProForm
         form={form}
         initialValues={{
+          username: 'PK_1235678',
+          password: '1235678',
           autoLogin: true,
         }}
         isKeyPressSubmit

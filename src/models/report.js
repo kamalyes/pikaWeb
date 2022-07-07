@@ -1,5 +1,4 @@
 import {listTestReport} from "@/services/report";
-import auth from "@/utils/auth";
 
 export default {
   namespace: 'report',
@@ -24,18 +23,16 @@ export default {
     * fetchReportList({payload}, {call, put, select}) {
       const {pagination} = yield select(state => state.report);
       const res = yield call(listTestReport, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            reportData: res.data,
-            pagination: {
-              ...pagination,
-              total: res.total,
-            }
+      yield put({
+        type: 'save',
+        payload: {
+          reportData: res.data,
+          pagination: {
+            ...pagination,
+            total: res.total,
           }
-        })
-      }
+        }
+      })
     }
   }
 }
