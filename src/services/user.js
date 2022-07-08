@@ -53,7 +53,7 @@ export async function queryAllUser(params) {
 }
 
 export async function updateUsers(data) {
-  return await request(`${CONFIG.URL}/auth/update`, {
+  return await request(`${CONFIG.URL}/user/info/update`, {
     method: 'POST',
     data,
     headers: auth.headers(),

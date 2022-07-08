@@ -480,7 +480,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
       {
         projects.length === 0 ? <Result status="404"
                                         subTitle={<span>你还没有添加任何项目, <a target="_blank"
-                                                                       href="/#/apiTest/project">添加项目</a>后才能编写Case</span>}/> :
+                                                                       href="/#/project">添加项目</a>后才能编写Case</span>}/> :
 
           <Row gutter={16}>
             <FormForModal title={modalTitle} onCancel={() => setRootModal(false)}

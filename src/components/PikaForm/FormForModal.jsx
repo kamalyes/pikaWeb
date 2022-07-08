@@ -55,7 +55,7 @@ const FormForModal = ({
         onFinish={onFinish}
       >
         {
-          fields.map((item, index) => <Col span={item.span || 24} key={index}>
+          fields.map((item, index) => <Col span={item.span || 21} key={index}>
             <FormItem label={item.label} colon={item.colon || true} initialValue={item.initialValue}
                       rules={
                         [{required: item.required, message: item.message}]

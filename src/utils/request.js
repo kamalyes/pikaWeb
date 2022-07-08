@@ -48,6 +48,7 @@ const errorHandler = (error) => {
   return response;
 };
 
+/** 配置request请求时的默认参数 */
 const request = extend({
   prefix: '',// 路径前缀
   errorHandler,  // 默认错误处理
@@ -76,6 +77,7 @@ request.interceptors.response.use(async (response, options) => {
   console.log("接口返回参数：response：", response)
   const data = await response.clone().json();
   const parse_status = +(status / 100);
+  const href = window.location.href;
   console.log("接口返回的response_data：\n", data);
 
   if (parse_status === 2 && status % 100 > 0) {
@@ -88,19 +90,26 @@ request.interceptors.response.use(async (response, options) => {
     localStorage.removeItem("pikaEmpNo");
     localStorage.removeItem("pikaUserName");
     localStorage.removeItem("PikaAuthority");
-    const href = window.location.href;
     if (href.indexOf("/user/login") === -1) {
       const uri = href.split("redirect=")
       window.location.href = `/#/user/login?redirect=${uri[uri.length - 1]}`
       // window.open(`/#/user/login?redirect=${href}`)
     }
-    message.info(data.detail);
+    message.info(JSON.stringify(data.detail));
   }
+
+  if (data.code === 200) {
+    const {pathname} = new URL(url);
+    if (pathname !== "/user/verifytoken") {
+      message.info(JSON.stringify(data.message));
+    }
+  }
+
   let ignore_status = [422, 200];
   // console.log("ignore_status", ignore_status)
   if (data.code !== 200 && ignore_status.indexOf(+status) !== -1) {
     notification.error({
-      message: data.detail,
+      message: JSON.stringify(data.detail),
     });
   }
 

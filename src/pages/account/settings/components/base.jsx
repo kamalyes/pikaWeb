@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {UploadOutlined} from '@ant-design/icons';
-import {Button, Form, Upload} from 'antd';
-import ProForm, {ProFormText,} from '@ant-design/pro-form';
+import {Button, Form, Upload, Cascader} from 'antd';
+import ProForm, {ProFormCascader, ProFormSelect, ProFormText} from '@ant-design/pro-form';
 import {connect} from 'umi';
 import styles from './BaseView.less';
+import city from '../../../../utils/cities'
 
 const validatorPhone = (rule, value, callback) => {
   callback();
@@ -36,7 +37,7 @@ const AvatarView = ({avatar, dispatch}) => (
 const BaseView = ({user, loading, dispatch}) => {
   const {currentUser} = user;
   const [form] = Form.useForm();
-
+  const [location,setLocation]=useState([]);
   const getAvatarURL = () => {
     if (currentUser) {
       if (currentUser.avatar) {
@@ -54,13 +55,21 @@ const BaseView = ({user, loading, dispatch}) => {
       type: 'user/updateUser',
       payload: {
         ...values,
-        uid: currentUser.uid,
+        location:location.join(','),
       },
     })
     dispatch({
       type: 'user/fetchCurrent'
     })
   };
+  const onChange = (value, selectedOptions) => {
+    setLocation(value);
+    console.log(value, selectedOptions);
+  }
+
+  const filter = (inputValue, path) => {
+    return path.some(option => option.label.indexOf(inputValue) > -1);
+  }
 
   return (
     <div className={styles.baseView}>
@@ -109,17 +118,54 @@ const BaseView = ({user, loading, dispatch}) => {
               <ProFormText
                 width="md"
                 name="mobile"
-                label="联系电话"
-                placeholder="输入电话后可接收钉钉/企业微信通知哦"
+                label="手机号"
+                placeholder="输入手机号后可接收钉钉/企业微信通知哦"
                 rules={[
                   {
                     required: false,
-                    message: '请输入您的联系电话!',
+                    message: '请输入您的手机号!',
                   },
                   {
                     validator: validatorPhone,
                   },
                 ]}
+              />
+              <ProFormText
+                width="md"
+                name="plane"
+                label="座机"
+              />
+              <ProFormText
+                width="md"
+                name="user_alias"
+                label="用户花名"
+              />
+              <ProFormSelect
+                width="md"
+                name="gender"
+                label="性别"
+                options={[
+                  {label: '未知', value: 0},
+                  {label: '男', value: 1},
+                  {label: '女', value: 2},
+                ]}
+                fieldProps={{
+                  optionItemRender(item) {
+                    return item.label;
+                  },
+                }}
+                placeholder="请选择您的性别!"
+                rules={[{required: true, message: '请选择您的性别!'}]}
+              />
+              <Cascader
+                style={{ width: '100%', marginBottom: '20px'}}
+                name="location"
+                label="所在城市名称"
+                options={city}
+                onChange={onChange}
+                placeholder="请选择省市区籍贯"
+                showSearch={filter}
+                defaultValue={currentUser.location.split(',')}
               />
             </ProForm>
           </div>

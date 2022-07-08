@@ -70,8 +70,10 @@ const Project = ({dispatch, project, loading}) => {
   const onHandleCreate = async (values) => {
     const res = await insertProject(values);
     setVisible(false);
-    // 创建成功后自动获取第一页的数据, 因为项目会按创建时间排序
-    await fetchData(1);
+    // 创建成功后自动获取第一页的数据, 因为项目会按创建时间排序, 等200ms
+    setTimeout(async () => {
+      await fetchData(1);
+    }, 500)
   };
 
   const fields = [
