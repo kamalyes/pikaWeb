@@ -36,14 +36,12 @@ export default ({response, caseName, width, modal, setModal, single = true}) => 
 
   const getBrain = async (case_id = response.case_id, single = true) => {
     const res = await queryXmindData({case_id})
-    if (auth.response(res)) {
-      if (single) {
+    if (single) {
         setXmindData(res.data)
       } else {
         const temp = Object.keys(response).map(k => res.data)
         setXmindDataList(temp)
       }
-    }
   }
 
   useEffect(async () => {

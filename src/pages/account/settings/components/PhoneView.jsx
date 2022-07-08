@@ -1,9 +1,9 @@
 import React from 'react';
-import { Input } from 'antd';
+import {Input} from 'antd';
 import styles from './PhoneView.less';
 
 const PhoneView = (props) => {
-  const { value, onChange } = props;
+  const {value, onChange} = props;
   let values = ['', ''];
 
   if (value) {

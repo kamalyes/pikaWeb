@@ -32,7 +32,7 @@ export default [
                 name: '工作台',
                 icon: 'icon-gongzuotai2',
                 component: './Dashboard/Workspace',
-              },{
+              }, {
                 path: '/account/settings',
                 name: '个人设置',
                 component: './account/settings',

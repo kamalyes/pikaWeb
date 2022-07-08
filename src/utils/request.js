@@ -48,8 +48,6 @@ const errorHandler = (error) => {
   return response;
 };
 
-/** 配置request请求时的默认参数 */
-
 const request = extend({
   prefix: '',// 路径前缀
   errorHandler,  // 默认错误处理

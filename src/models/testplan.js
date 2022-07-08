@@ -8,7 +8,6 @@ import {
   unFollowTestPlan,
   updateTestPlan
 } from "@/services/testplan";
-import auth from "@/utils/auth";
 
 export default {
   namespace: `testplan`,
@@ -41,11 +40,11 @@ export default {
     * listTestPlan({payload}, {call, put}) {
       const res = yield call(listTestPlan, payload);
       yield put({
-          type: 'save',
-          payload: {
-            planData: res.data,
-          }
-        })
+        type: 'save',
+        payload: {
+          planData: res.data,
+        }
+      })
     },
 
     * insertTestPlan({payload}, {call, put}) {
@@ -65,7 +64,7 @@ export default {
 
     * executeTestPlan({payload}, {call}) {
       const res = yield call(executeTestPlan, payload);
-      return  null
+      return null
     },
 
     /**
@@ -92,15 +91,13 @@ export default {
 
     * listTestCaseTreeWithProjectId({payload}, {call, put}) {
       const res = yield call(listTestPlanCaseTree, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            treeData: res.data.tree,
-            caseMap: res.data.case_map,
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          treeData: res.data.tree,
+          caseMap: res.data.case_map,
+        }
+      })
     }
   }
 }

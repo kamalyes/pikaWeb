@@ -1,5 +1,4 @@
 import {deleteProject, listProject, updateAvatar} from "@/services/project";
-import auth from "@/utils/auth";
 
 const getProjectId = () => {
   const projectId = localStorage.getItem("project_id")
@@ -28,22 +27,22 @@ export default {
     * listProject({payload}, {call, put, select}) {
       const res = yield call(listProject, {page: 1, size: 10000});
       const projects = {}
-        res.data.forEach(item => {
-          projects[item.id] = item.name;
-        })
-        let projId = yield select(state => state.project.project_id)
-        if (projId === undefined) {
-          projId = res.data.length > 0 ? res.data[0].id : undefined
+      res.data.forEach(item => {
+        projects[item.id] = item.name;
+      })
+      let projId = yield select(state => state.project.project_id)
+      if (projId === undefined) {
+        projId = res.data.length > 0 ? res.data[0].id : undefined
+      }
+      yield put({
+        type: 'save',
+        payload: {
+          projects: res.data,
+          projectsMap: projects,
+          project_id: projId,
         }
-        yield put({
-          type: 'save',
-          payload: {
-            projects: res.data,
-            projectsMap: projects,
-            project_id: projId,
-          }
-        })
-      },
+      })
+    },
 
     * uploadFile({payload}, {call, put}) {
       const res = yield call(updateAvatar, payload)

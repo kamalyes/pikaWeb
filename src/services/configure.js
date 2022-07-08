@@ -22,7 +22,7 @@ export async function insertEnvironment(params) {
  */
 export async function deleteEnvironment(params) {
   return request(`${CONFIG.URL}/itstem/environment/delete`, {
-    method: 'GET',
+    method: 'DELETE',
     params,
     headers: auth.headers(),
   });

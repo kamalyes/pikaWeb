@@ -7,11 +7,11 @@ import routes from './routes';
 const {REACT_APP_ENV} = process.env;
 export default defineConfig({
   hash: true,
-  antd: {
-    dark: false,
-  },
   dva: {
     hmr: true,
+  },
+  antd: {
+    dark: false,
   },
   history: {
     type: 'hash',
@@ -33,7 +33,7 @@ export default defineConfig({
   // Theme for antd: https://ant.design/docs/react/customize-theme-cn
   theme: {
     'primary-color': defaultSettings.primaryColor,
-    'border-radius-base': '4px',
+    'border-radius-base': '3px',
     'font-size-base': '13px',
   },
   title: false,

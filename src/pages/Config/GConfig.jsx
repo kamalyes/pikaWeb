@@ -86,8 +86,8 @@ const GConfig = ({gconfig, user, loading, dispatch}) => {
     },
     {
       title: "创建人",
-      key: "create_user",
-      render: (_, record) => <UserLink user={userMap[record.create_user.toString()]}/>
+      key: "create_emp_no",
+      render: (_, record) => <UserLink user={userMap[record.create_emp_no.toString()]}/>
     },
     {
       title: '操作',

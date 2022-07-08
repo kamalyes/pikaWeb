@@ -2,8 +2,8 @@ import {
   deleteUsers,
   listUserActivities,
   listUserOperationLog,
-  listUsers,
   loginGithub,
+  queryAllUser,
   queryCurrent,
   queryFollowTestPlanData,
   queryUserStatistics,
@@ -89,7 +89,7 @@ const UserModel = {
     },
 
     * fetchUserList(_, {call, put}) {
-      const response = yield call(listUsers);
+      const response = yield call(queryAllUser);
       const {userMap, userNameMap} = getUserMap(response);
       yield put({
         type: 'save',
@@ -176,11 +176,11 @@ const UserModel = {
     * queryFollowTestPlanData(_, {call, put}) {
       const response = yield call(queryFollowTestPlanData);
       yield put({
-          type: 'save',
-          payload: {
-            followPlan: response.data,
-          },
-        });
+        type: 'save',
+        payload: {
+          followPlan: response.data,
+        },
+      });
     },
 
 

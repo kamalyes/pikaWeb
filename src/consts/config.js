@@ -12,14 +12,14 @@ const isDev = () => {
 const dev = isDev()
 
 const getUrl = () => {
-  if (defaultSettings.apiUrl !== null) {
+  if (defaultSettings.apiUrl !== undefined) {
     return defaultSettings.apiUrl;
   }
   return dev ? 'http://localhost:7780' : 'https://api.pika.fun'
 }
 
 const getWss = () => {
-  if (defaultSettings.wssUrl) {
+  if (defaultSettings.wssUrl !== undefined) {
     return defaultSettings.wssUrl;
   }
   return dev ? 'ws://127.0.0.1:7780/ws' : 'wss://api.pika.fun/ws'

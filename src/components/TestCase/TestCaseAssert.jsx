@@ -4,7 +4,6 @@ import FormForModal from "@/components/PikaForm/FormForModal";
 import fields from "@/consts/fields";
 import React, {useState} from "react";
 import {connect} from 'umi';
-import auth from "@/utils/auth";
 import NoRecord from "@/components/NotFound/NoRecord";
 import {CONFIG} from "@/consts/config";
 
@@ -126,33 +125,29 @@ const TestCaseAssert = ({dispatch, testcase, caseId, createMode}) => {
           type: 'testcase/updateTestCaseAsserts',
           payload: {...data, id: record.id}
         })
-        if (auth.response(res, true)) {
-          setAssertModal(false);
-          const newData = [...asserts];
-          const index = newData.findIndex((item) => record.id === item.id);
-          const item = newData[index]
-          newData.splice(index, 1, {...item, ...res.data});
-          await dispatch({
-            type: 'testcase/save',
-            payload: {
-              asserts: newData,
-            }
-          })
-        }
+        setAssertModal(false);
+        const newData = [...asserts];
+        const index = newData.findIndex((item) => record.id === item.id);
+        const item = newData[index]
+        newData.splice(index, 1, {...item, ...res.data});
+        await dispatch({
+          type: 'testcase/save',
+          payload: {
+            asserts: newData,
+          }
+        })
       } else {
         res = await dispatch({
           type: 'testcase/insertTestCaseAsserts',
           payload: data
         })
-        if (auth.response(res, true)) {
-          setAssertModal(false);
-          await dispatch({
-            type: 'testcase/save',
-            payload: {
-              asserts: [...asserts, res.data]
-            }
-          })
-        }
+        setAssertModal(false);
+        await dispatch({
+          type: 'testcase/save',
+          payload: {
+            asserts: [...asserts, res.data]
+          }
+        })
       }
     }
 

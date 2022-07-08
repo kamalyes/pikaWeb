@@ -23,10 +23,7 @@ export async function queryNotices(params) {
     params,
     headers: auth.headers(),
   });
-  if (auth.response(res)) {
-    return res.data;
-  }
-  return [];
+  return res.data;
 }
 
 export async function updateNotices(params) {
@@ -46,16 +43,13 @@ export async function deleteNotice(params) {
 }
 
 
-export async function listUsers(params) {
-  const res = await request(`${CONFIG.URL}/auth/listUser`, {
+export async function queryAllUser(params) {
+  const res = await request(`${CONFIG.URL}/user/alluser`, {
     method: 'GET',
     params,
     headers: auth.headers(),
   });
-  if (auth.response(res)) {
-    return res.data;
-  }
-  return [];
+  return res.data;
 }
 
 export async function updateUsers(data) {

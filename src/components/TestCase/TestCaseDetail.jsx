@@ -12,7 +12,7 @@ import {
 import {CONFIG} from '@/consts/config';
 import CaseDetail from '@/components/Drawer/CaseDetail';
 import fields from '@/consts/fields';
-import {executeCase, executeSelectedCase} from '@/services/request';
+import {executeCase, executeSelectedCase} from '@/services/ask';
 import HeaderTable from '@/components/Table/HeaderTable';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {vs2015} from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -166,11 +166,11 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
                           <a href={data.url} style={{fontSize: 14}}>{data.url}</a>
                         </Descriptions.Item>
                         <Descriptions.Item
-                          label='创建人'>{userMap[data.create_user] !== undefined ? userMap[data.create_user].name : 'loading...'}</Descriptions.Item>
+                          label='创建人'>{userMap[data.create_emp_no] !== undefined ? userMap[data.create_emp_no].name : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item
                           label='更新人'>{userMap[data.update_user] !== undefined ? userMap[data.update_user].name : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label='创建时间'>{data.created_at}</Descriptions.Item>
-                        <Descriptions.Item label='更新时间'>{data.updated_at}</Descriptions.Item>
+                        <Descriptions.Item label='更新时间'>{data.update_date}</Descriptions.Item>
                         <Descriptions.Item label='用例标签' span={2}>{
                           <div style={{textAlign: 'center'}}>
                             {data.tag ? data.tag.split(',').map(v => <Tag style={{marginRight: 4}}

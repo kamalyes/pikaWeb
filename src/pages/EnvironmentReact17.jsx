@@ -5,7 +5,7 @@ import {insertEnvironment, listEnvironment, updateEnvironment} from '@/services/
 import auth from '@/utils/auth';
 import FormForModal from '@/components/PikaForm/FormForModal';
 import fields from '@/consts/fields';
-import {listUsers} from '@/services/user';
+import {queryAllUser} from '@/services/user';
 import UserLink from "@/components/Button/UserLink";
 
 
@@ -19,7 +19,7 @@ export default () => {
   const [pagination, setPagination] = useState({current: 1, pageSize: 8, total: 0});
 
   const getUsers = async () => {
-    const user = await listUsers();
+    const user = await queryAllUser();
     const temp = {};
     user.forEach((item) => {
       temp[item.id] = item.name;
@@ -36,11 +36,8 @@ export default () => {
   const fetchEnvironmentList = async (page = pagination.current, size = pagination.pageSize, name = name) => {
     setLoading(true);
     const res = await listEnvironment({page, size, name})
-    if (auth.response(res)) {
-      setData(res.data);
-      setPagination({...pagination, total: res.data});
-    }
-    setLoading(false);
+    setData(res.data);
+    setPagination({...pagination, total: res.data});
   }
 
   useEffect(init, []);
@@ -63,13 +60,13 @@ export default () => {
     },
     {
       title: "创建人",
-      key: "create_user",
-      render: (_, record) => <UserLink user={users[record.create_user.toString()]}/>
+      key: "create_emp_no",
+      render: (_, record) => <UserLink user={users[record.create_emp_no.toString()]}/>
     },
     {
       title: "更新时间",
-      dataIndex: "updated_at",
-      key: "updated_at",
+      dataIndex: "update_date",
+      key: "update_date",
     },
     {
       title: "操作",
@@ -102,9 +99,7 @@ export default () => {
     } else {
       res = await updateEnvironment(params);
     }
-    if (auth.response(res, true)) {
-      setVisible(false);
-    }
+    setVisible(false);
     await fetchEnvironmentList();
   }
 

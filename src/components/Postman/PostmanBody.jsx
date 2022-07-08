@@ -17,7 +17,7 @@ import {
 } from 'antd';
 import {DeleteTwoTone, DownOutlined, EditTwoTone, QuestionCircleOutlined} from '@ant-design/icons';
 import EditableTable from '@/components/Table/EditableTable';
-import {httpRequest} from '@/services/request';
+import {httpRequest} from '@/services/ask';
 import auth from '@/utils/auth';
 import {listGConfig} from "@/services/configure";
 import FormData from "@/components/Postman/FormData";
@@ -112,15 +112,13 @@ const PostmanBody = ({
 
   useEffect(async () => {
     const res = await listGConfig({page: 1, size: 500});
-    if (auth.response(res)) {
-      const data = res.data.map((v) => ({
-        label: <Tooltip title={<pre>{v.value}</pre>}>
-          <div>{v.key}</div>
-        </Tooltip>, value: `$\{${v.key}\}`, key: v.id
-      }))
-      data.unshift({label: <a onClick={() => setOpen(false)}>收起</a>})
-      setOptions(data);
-    }
+    const data = res.data.map((v) => ({
+      label: <Tooltip title={<pre>{v.value}</pre>}>
+        <div>{v.key}</div>
+      </Tooltip>, value: `$\{${v.key}\}`, key: v.id
+    }))
+    data.unshift({label: <a onClick={() => setOpen(false)}>收起</a>})
+    setOptions(data);
     setUrl(form.getFieldValue('url'));
     splitUrl(form.getFieldValue('url'))
   }, [body])
@@ -233,9 +231,7 @@ const PostmanBody = ({
     }
     const res = await httpRequest(params);
     setLoading(false);
-    if (auth.response(res, true)) {
-      setResponse(res.data);
-    }
+    setResponse(res.data);
   };
 
   const onDelete = (columnType, key) => {

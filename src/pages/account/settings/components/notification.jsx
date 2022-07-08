@@ -1,9 +1,9 @@
-import { List, Switch } from 'antd';
-import React, { Fragment } from 'react';
+import {List, Switch} from 'antd';
+import React, {Fragment} from 'react';
 
 const NotificationView = () => {
   const getData = () => {
-    const Action = <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked />;
+    const Action = <Switch checkedChildren="开" unCheckedChildren="关" defaultChecked/>;
     return [
       {
         title: '账户密码',
@@ -31,7 +31,7 @@ const NotificationView = () => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item actions={item.actions}>
-            <List.Item.Meta title={item.title} description={item.description} />
+            <List.Item.Meta title={item.title} description={item.description}/>
           </List.Item>
         )}
       />

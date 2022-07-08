@@ -3,7 +3,7 @@ import {CONFIG} from '@/consts/config';
 import auth from '@/utils/auth';
 
 export async function httpRequest(params) {
-  return request(`${CONFIG.URL}/request/http`, {
+  return request(`${CONFIG.URL}/ask/request/http`, {
     method: 'POST',
     data: params,
     headers: auth.headers(),
@@ -11,7 +11,7 @@ export async function httpRequest(params) {
 }
 
 export async function executeCase(params) {
-  return request(`${CONFIG.URL}/request/run`, {
+  return request(`${CONFIG.URL}/ask/request/run`, {
     method: 'GET',
     params,
     headers: auth.headers(),
@@ -19,7 +19,7 @@ export async function executeCase(params) {
 }
 
 export async function executeSelectedCase(params) {
-  return request(`${CONFIG.URL}/request/run/multiple`, {
+  return request(`${CONFIG.URL}/ask/request/run/multiple`, {
     method: 'POST',
     data: params.case_list,
     params: {env: params.env},

@@ -21,7 +21,7 @@ import {
   updateTestcaseData,
   updateTestcaseDirectory
 } from "@/services/testcase";
-import {executeCase, executeSelectedCase} from "@/services/request";
+import {executeCase, executeSelectedCase} from "@/services/ask";
 
 export default {
   namespace: 'testcase',
@@ -70,62 +70,56 @@ export default {
   effects: {
     * listTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(listTestcaseTree, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            directory: res.data,
-            currentDirectory: res.data.length > 0 ? [res.data[0].key] : []
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          directory: res.data,
+          currentDirectory: res.data.length > 0 ? [res.data[0].key] : []
+        }
+      })
     },
 
     * listTestcase({payload}, {call, put, select}) {
       const res = yield call(listTestcase, payload);
-      if (auth.response(res)) {
-        const {pagination} = yield select(state => state.testcase);
-        yield put({
-          type: 'save',
-          payload: {
-            testcases: res.data,
-            pagination: {...pagination, total: res.data.length, current: 1}
-          }
-        })
-      }
+      const {pagination} = yield select(state => state.testcase);
+      yield put({
+        type: 'save',
+        payload: {
+          testcases: res.data,
+          pagination: {...pagination, total: res.data.length, current: 1}
+        }
+      })
     },
 
     * queryTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(queryTestcaseDirectory, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            directoryName: res.data.name,
-            casePermission: true
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          directoryName: res.data.name,
+          casePermission: true
+        }
+      })
     },
 
     * insertTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(insertTestcaseDirectory, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * updateTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(updateTestcaseDirectory, payload);
-      return auth.response(res, true);
+      return true;
     },
 
     * moveTestCaseToDirectory({payload}, {call, put}) {
       const res = yield call(moveTestCase, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * deleteTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(deleteTestcaseDirectory, payload);
-      return auth.response(res, true);
+      return true
     },
 
     /**
@@ -137,73 +131,65 @@ export default {
      */
     * deleteTestcase({payload}, {call, put}) {
       const res = yield call(deleteTestcase, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * queryTestcase({payload}, {call, put}) {
       const res = yield call(queryTestCase, payload);
-      if (auth.response(res)) {
-        yield put({
-          type: 'save',
-          payload: {
-            caseInfo: res.data.case,
-            asserts: res.data.asserts,
-            // 2022-04-23 拆分前后置条件
-            preConstructor: res.data.constructors.filter(v => v.suffix === false).map((v, index) => ({...v, index})),
-            postConstructor: res.data.constructors.filter(v => v.suffix === true).map((v, index) => ({...v, index})),
-            // constructors: res.data.constructors.map((v, index) => ({...v, index})),
-            constructors_case: res.data.constructors_case,
-            testData: res.data.test_data,
-            outParameters: [...res.data.out_parameters.map((item, index) => ({...item, key: index})), {
-              key: res.data.out_parameters.length,
-              source: 0
-            }]
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          caseInfo: res.data.case,
+          asserts: res.data.asserts,
+          // 2022-04-23 拆分前后置条件
+          preConstructor: res.data.constructors.filter(v => v.suffix === false).map((v, index) => ({...v, index})),
+          postConstructor: res.data.constructors.filter(v => v.suffix === true).map((v, index) => ({...v, index})),
+          // constructors: res.data.constructors.map((v, index) => ({...v, index})),
+          constructors_case: res.data.constructors_case,
+          testData: res.data.test_data,
+          outParameters: [...res.data.out_parameters.map((item, index) => ({...item, key: index})), {
+            key: res.data.out_parameters.length,
+            source: 0
+          }]
+        }
+      })
     },
 
     * insertTestcase({payload}, {call, put}) {
       const res = yield call(createTestCase, payload);
-      if (auth.response(res, true)) {
-        const caseId = res.data;
-        window.location.href = `/#/apiTest/testcase/${payload.directory_id}/${caseId}`
-      }
+      const caseId = res.data;
+      window.location.href = `/#/apiTest/testcase/${payload.directory_id}/${caseId}`
     },
 
     * createTestCase({payload}, {call, put}) {
       const res = yield call(createTestCaseV2, payload);
-      return auth.response(res, true)
+      return true
     },
 
     * updateTestcase({payload}, {call, put}) {
       const res = yield call(updateTestCase, payload);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {
-            caseInfo: res.data.case_info,
-            outParameters: [...res.data.out_parameters.map((item, index) => ({...item, key: index})), {
-              key: res.data.out_parameters.length,
-              source: 0
-            }],
-            editing: false,
-          }
-        })
-      }
+      yield put({
+        type: 'save',
+        payload: {
+          caseInfo: res.data.case_info,
+          outParameters: [...res.data.out_parameters.map((item, index) => ({...item, key: index})), {
+            key: res.data.out_parameters.length,
+            source: 0
+          }],
+          editing: false,
+        }
+      })
+      return true
     },
     * executeTestcase({payload}, {call, put}) {
       const res = yield call(executeCase, payload);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {
-            testResult: res.data,
-          }
-        })
-        return true;
-      }
-      return false;
+      yield put({
+        type: 'save',
+        payload: {
+          testResult: res.data,
+        }
+      })
+      return true;
     },
 
     * executeSelectedCase({payload}, {call, put}) {
@@ -219,7 +205,7 @@ export default {
     },
     * deleteTestCaseAsserts({payload}, {call, put}) {
       const res = yield call(deleteTestCaseAsserts, payload)
-      return auth.response(res, true);
+      return true
     },
 
     // 执行测试用例
@@ -270,7 +256,7 @@ export default {
 
     * deleteTestcaseData({payload}, {call, _}) {
       const res = yield call(deleteTestcaseData, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * retryCase({payload}, {call, put}) {

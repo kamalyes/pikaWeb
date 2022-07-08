@@ -4,7 +4,7 @@ import {Avatar, Card, PageHeader, Tabs} from 'antd';
 import {useParams} from 'umi';
 import {queryProject} from '@/services/project';
 import ProjectInfo from '@/components/Project/ProjectInfo';
-import {listUsers} from '@/services/user';
+import {queryAllUser} from '@/services/user';
 import ProjectRole from '@/components/Project/ProjectRole';
 import {CONFIG} from "@/consts/config";
 import styles from "./Project.less";
@@ -25,7 +25,7 @@ export default () => {
   const [authority, setAuthority] = useState(false);
 
   const fetchUsers = async () => {
-    const res = await listUsers();
+    const res = await queryAllUser();
     setUsers(res);
     const temp = {}
     res.forEach(item => {
@@ -37,10 +37,9 @@ export default () => {
   const fetchData = async (projId = projectId) => {
     const res = await queryProject({projectId: projId});
     setAuthority(res.code !== 403);
-    if (auth.response(res)) {
+    if (res.code ===200){
       setProjectData(res.data.project);
       setRoles(res.data.roles);
-
     }
   };
 

@@ -23,7 +23,7 @@ import {
   updateSystemConfig,
   uploadFile
 } from '@/services/configure';
-import  {onlineRedisCommand} from '@/services/online';
+import {onlineRedisCommand} from '@/services/online';
 import auth from '@/utils/auth';
 import {message} from 'antd';
 
@@ -72,14 +72,12 @@ export default {
     // 获取系统配置
     * fetchSystemConfig({payload}, {call, put}) {
       const res = yield call(getSystemConfig)
-      if (auth.response(res)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             configuration: res.data,
           }
         })
-      }
     },
 
     * updateConfiguration({payload}, {call, _}) {
@@ -90,14 +88,12 @@ export default {
     // 获取数据库配置
     * fetchDbConfig({payload}, {call, put}) {
       const res = yield call(listDbConfig, payload);
-      if (auth.response(res)) {
-        yield put({
+       yield put({
           type: 'save',
           payload: {
             dbConfigData: res.data,
           },
         });
-      }
     },
 
     // 新增数据库配置
@@ -117,7 +113,7 @@ export default {
 
     * onTestDbConfig({payload}, {call, put}) {
       const res = yield call(onTestDbConfig, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * updateDbConfig({payload}, {call, put}) {
@@ -136,7 +132,7 @@ export default {
 
     * deleteDbConfig({payload}, {call, put}) {
       const res = yield call(deleteDbConfig, payload);
-      return auth.response(res, true);
+      return true
     },
 
 
@@ -144,8 +140,7 @@ export default {
     * fetchGConfig({payload}, {call, put, select}) {
       const state = yield select(state => state.gconfig);
       const res = yield call(listGConfig, payload);
-      if (auth.response(res)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             data: res.data,
@@ -156,7 +151,6 @@ export default {
             },
           },
         });
-      }
 
     },
 
@@ -292,31 +286,28 @@ export default {
 
     * insertRedisConfig({payload}, {call, put}) {
       const res = yield call(insertRedisConfig, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * updateRedisConfig({payload}, {call, put}) {
       const res = yield call(updateRedisConfig, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * deleteRedisConfig({payload}, {call, put}) {
       const res = yield call(deleteRedisConfig, payload);
-      return auth.response(res, true);
+      return true
 
     },
 
     * onlineRedisCommand({payload}, {call, put}) {
       const res = yield call(onlineRedisCommand, payload);
-      if (auth.response(res)) {
-        return res.data;
-      }
-      return res.msg;
+      return res.data;
     },
 
     * uploadFile({payload}, {call}) {
       const res = yield call(uploadFile, payload);
-      return auth.response(res, true);
+      return true
     },
 
     * removeOssFile({payload}, {call, put}) {
@@ -330,15 +321,13 @@ export default {
 
     * listOssFile({_}, {call, put}) {
       const res = yield call(listFile);
-      if (auth.response(res)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             ossFileList: res.data,
             searchOssFileList: res.data,
           }
         })
-      }
     }
   },
 };

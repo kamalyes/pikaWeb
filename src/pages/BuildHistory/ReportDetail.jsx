@@ -3,7 +3,6 @@ import {Badge, Card, Col, Descriptions, Divider, Input, Row, Spin, Statistic, Ta
 import {PageContainer} from "@ant-design/pro-layout";
 import React, {useEffect, useState} from "react";
 import {queryReport} from "@/services/report";
-import auth from "@/utils/auth";
 import styles from './ReportDetail.less';
 import './ReportDetail.less';
 import {
@@ -129,12 +128,10 @@ const ReportDetail = ({dispatch, loading, user, gconfig}) => {
     fetchEnv();
     fetchUsers();
     const res = await queryReport({id: reportId})
-    if (auth.response(res)) {
-      setCaseList(res.data.case_list);
-      setCurrentCaseList(res.data.case_list);
-      setReportDetail(res.data.report);
-      setPlanName(res.data.plan_name);
-    }
+    setCaseList(res.data.case_list);
+    setCurrentCaseList(res.data.case_list);
+    setReportDetail(res.data.report);
+    setPlanName(res.data.plan_name);
   }, [])
 
   const onHandleRetry = async record => {

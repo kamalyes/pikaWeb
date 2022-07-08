@@ -109,8 +109,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
         env,
       }
     })
-    if (auth.response(res)) {
-      Modal.confirm({
+    Modal.confirm({
         title: '用例正在后台执行, 去报告页面查看任务状态🔔',
         icon: <QuestionCircleOutlined/>,
         onOk() {
@@ -119,7 +118,6 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
         onCancel() {
         },
       });
-    }
   }
 
   const menu = record => (
@@ -173,16 +171,16 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
     },
     {
       title: "创建人",
-      dataIndex: "create_user",
-      key: 'create_user',
+      dataIndex: "create_emp_no",
+      key: 'create_emp_no',
       width: 100,
       ellipsis: true,
-      render: create_user => <UserLink user={userMap[create_user]}/>
+      render: create_emp_no => <UserLink user={userMap[create_emp_no]}/>
     },
     {
       title: "更新时间",
-      dataIndex: "updated_at",
-      key: 'updated_at',
+      dataIndex: "update_date",
+      key: 'update_date',
       width: 160,
     },
     {
@@ -217,7 +215,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
     }
   }
 
-  const listUsers = () => {
+  const queryAllUser = () => {
     dispatch({
       type: 'user/fetchUserList'
     })
@@ -237,7 +235,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
         payload: {
           directory_id: currentDirectory[0],
           name: values.name || '',
-          create_user: values.create_user !== null && values.create_user !== undefined ? values.create_user : '',
+          create_emp_no: values.create_emp_no !== null && values.create_emp_no !== undefined ? values.create_emp_no : '',
         },
       })
     }
@@ -245,7 +243,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
 
   useEffect(() => {
     listProjects();
-    listUsers();
+    queryAllUser();
     listEnv();
   }, [])
 
@@ -571,7 +569,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
                           </Form.Item>
                         </Col>
                         <Col span={8}>
-                          <Form.Item label="创建人"  {...layout} name="create_user">
+                          <Form.Item label="创建人"  {...layout} name="create_emp_no">
                             <UserSelect users={userList} placeholder="请选择创建用户"/>
                           </Form.Item>
                         </Col>

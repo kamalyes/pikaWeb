@@ -1,5 +1,6 @@
 import React from 'react';
-import { List } from 'antd';
+import {List} from 'antd';
+
 const passwordStrength = {
   strong: <span className="strong">强</span>,
   medium: <span className="medium">中</span>,
@@ -48,7 +49,7 @@ const SecurityView = () => {
         dataSource={data}
         renderItem={(item) => (
           <List.Item actions={item.actions}>
-            <List.Item.Meta title={item.title} description={item.description} />
+            <List.Item.Meta title={item.title} description={item.description}/>
           </List.Item>
         )}
       />

@@ -27,31 +27,26 @@ export default {
   effects: {
     * fetchDatabaseSource({payload}, {call, put}) {
       const res = yield call(fetchDatabaseSource);
-      if (auth.response(res)) {
-        const {database, tables} = res.data;
-        yield put({
-          type: 'save',
-          payload: {
-            databaseSource: database,
-            table_map: tables,
-          }
-        })
-        return database;
-      }
+      const {database, tables} = res.data;
+      yield put({
+        type: 'save',
+        payload: {
+          databaseSource: database,
+          table_map: tables,
+        }
+      })
+      return database;
     },
 
     * onlineExecuteSQL({payload}, {call, put}) {
       const res = yield call(onlineExecuteSQL, payload);
-      if (auth.response(res, true)) {
-        yield put({
+      yield put({
           type: 'save',
           payload: {
             sqlColumns: res.data.columns,
             testResults: res.data.result,
           }
         })
-
-      }
     }
   }
 }

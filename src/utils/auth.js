@@ -1,4 +1,4 @@
-import {listUsers} from '@/services/user';
+import {queryAllUser} from '@/services/user';
 
 export default {
   headers: (json = true) => {
@@ -12,7 +12,7 @@ export default {
   },
   getUserMap: async () => {
     try {
-      const user = await listUsers();
+      const user = await queryAllUser();
       const temp = {};
       user.forEach((item) => {
         temp[item.id] = item;

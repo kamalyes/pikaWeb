@@ -1,6 +1,7 @@
 import request from '@/utils/request';
 import {CONFIG} from '@/consts/config';
 import convterJsonToFromData from "@/utils/hander";
+
 export async function login(params) {
   return request(`${CONFIG.URL}/user/login`, {
     method: 'POST',

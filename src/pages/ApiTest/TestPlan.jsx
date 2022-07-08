@@ -158,9 +158,9 @@ const TestPlan = ({testplan, dispatch, loading, gconfig, user, project}) => {
     },
     {
       title: '创建人',
-      key: 'create_user',
-      dataIndex: 'create_user',
-      render: create_user => <UserLink user={userMap[create_user]}/>
+      key: 'create_emp_no',
+      dataIndex: 'create_emp_no',
+      render: create_emp_no => <UserLink user={userMap[create_emp_no]}/>
     },
     {
       title: '操作',
@@ -259,7 +259,7 @@ const TestPlan = ({testplan, dispatch, loading, gconfig, user, project}) => {
                 </Form.Item>
               </Col>
               <Col span={5}>
-                <Form.Item label="创建人" name="create_user">
+                <Form.Item label="创建人" name="create_emp_no">
                   <UserSelect users={userList}/>
                 </Form.Item>
               </Col>

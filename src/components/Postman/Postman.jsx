@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import {Button, Card, Col, Dropdown, Input, Menu, notification, Radio, Row, Select, Table, Tabs,} from 'antd';
 import {DeleteTwoTone, DownOutlined, EditTwoTone} from '@ant-design/icons';
 import EditableTable from '@/components/Table/EditableTable';
-import {httpRequest} from '@/services/request';
+import {httpRequest} from '@/services/ask';
 import {connect} from 'umi'
-import auth from '@/utils/auth';
 import FormData from "@/components/Postman/FormData";
 import {IconFont} from "@/components/Icon/IconFont";
 import JSONAceEditor from "@/components/CodeEditor/AceEditor/JSONAceEditor";
@@ -168,9 +167,7 @@ const Postman = ({loading: gloading, gconfig, dispatch}) => {
     }
     const res = await httpRequest(params);
     setLoading(false);
-    if (auth.response(res, true)) {
-      setResponse(res.data);
-    }
+    setResponse(res.data);
   };
 
   const onDelete = (columnType, key) => {

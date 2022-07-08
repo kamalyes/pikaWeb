@@ -51,16 +51,16 @@ const Oss = ({loading, dispatch, gconfig, user}) => {
     },
     {
       title: '创建人',
-      key: 'create_user',
-      dataIndex: 'create_user',
+      key: 'create_emp_no',
+      dataIndex: 'create_emp_no',
       render: createUser => <UserLink user={userMap[createUser]}/>
       // render: lastModified => lastModified === null ? '不提供此功能' : moment(lastModified * 1000).subtract(moment().utcOffset() / 60 - 8, 'hours').format('YYYY-MM-DD HH:mm:ss')
 
     },
     {
       title: '更新时间',
-      key: 'updated_at',
-      dataIndex: 'updated_at',
+      key: 'update_date',
+      dataIndex: 'update_date',
       // render: lastModified => lastModified === null ? '不提供此功能' : moment(lastModified * 1000).subtract(moment().utcOffset() / 60 - 8, 'hours').format('YYYY-MM-DD HH:mm:ss')
 
     },

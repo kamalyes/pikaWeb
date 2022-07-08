@@ -17,7 +17,6 @@ export default ({data, users, reloadData}) => {
       ...values,
     };
     const res = await updateProject(project);
-    auth.response(res, true);
     await reloadData();
   };
 
@@ -57,20 +56,26 @@ export default ({data, users, reloadData}) => {
       type: 'select',
     },
     {
+      name: 'dingtalk_url',
+      label: '钉钉通知',
+      required: false,
+      type: 'textarea',
+      placeholder: '请输入钉钉通知机器人地址',
+    },
+    {
+      name: 'qy_wx_url',
+      label: '企微通知',
+      required: false,
+      type: 'textarea',
+      placeholder: '请输入企微通知机器人地址',
+    },
+    {
       name: 'description',
       label: '项目描述',
       required: false,
       message: '请输入项目描述',
       type: 'textarea',
       placeholder: '请输入项目描述',
-    },
-    {
-      name: 'dingtalk_url',
-      label: '钉钉通知openapi',
-      required: false,
-      message: '请输入项目对应钉钉群机器人api',
-      type: 'input',
-      placeholder: '请输入项目对应钉钉群机器人api',
     },
     {
       name: 'private',

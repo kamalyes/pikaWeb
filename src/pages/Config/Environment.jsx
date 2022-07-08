@@ -33,12 +33,10 @@ class Environment extends Component {
   fetchEnvironmentList = async (page = this.state.pagination.current, size = this.state.pagination.pageSize, name = this.state.name) => {
     this.setState({loading: true});
     const res = await listEnvironment({page, size, name});
-    if (auth.response(res)) {
-      this.setState({
-        data: res.data,
-        pagination: {total: res.total, current: page, pageSize: size},
-      });
-    }
+    this.setState({
+      data: res.data,
+      pagination: {total: res.total, current: page, pageSize: size},
+    });
     this.setState({loading: false});
   };
 
@@ -55,15 +53,12 @@ class Environment extends Component {
     } else {
       res = await updateEnvironment(params);
     }
-    if (auth.response(res, true)) {
-      this.setState({visible: false});
-    }
+    this.setState({visible: false});
     await this.fetchEnvironmentList();
   };
 
   onDelete = async id => {
     const res = await deleteEnvironment({id});
-    auth.response(res, true);
     await this.fetchEnvironmentList();
   };
 
@@ -87,15 +82,14 @@ class Environment extends Component {
       },
       {
         title: '创建人',
-        key: 'create_user',
-        // render: (_, record) => this.state.users[record.create_user.toString()] || '加载中...',
-        render: (_, record) => <UserLink user={this.state.users[record.create_user.toString()]}/>,
+        key: 'create_emp_no',
+        render: (_, record) => <UserLink user={this.state.users[record.create_emp_no]}/>,
 
       },
       {
         title: '更新时间',
-        dataIndex: 'updated_at',
-        key: 'updated_at',
+        dataIndex: 'update_date',
+        key: 'update_date',
       },
       {
         title: '操作',

@@ -19,9 +19,13 @@ export async function insertProject(params) {
 }
 
 export async function queryProject(params) {
+  const {projectId, ...params_copy} = params;
   return request(`${CONFIG.URL}/project/query`, {
     method: 'GET',
-    params,
+    params: {
+      ...params_copy,
+      "project_id": projectId
+    },
     headers: auth.headers(),
   });
 }

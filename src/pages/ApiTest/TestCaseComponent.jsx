@@ -273,11 +273,11 @@ const TestCaseComponent = ({loading, dispatch, user, testcase, gconfig}) => {
                           </div>
                         }</Descriptions.Item>
                         <Descriptions.Item
-                          label='创建人'><UserLink size={16} user={userMap[caseInfo.create_user]}/></Descriptions.Item>
+                          label='创建人'><UserLink size={16} user={userMap[caseInfo.create_emp_no]}/></Descriptions.Item>
                         <Descriptions.Item
                           label='更新人'><UserLink size={16} user={userMap[caseInfo.update_user]}/></Descriptions.Item>
                         <Descriptions.Item label='创建时间'>{caseInfo.created_at}</Descriptions.Item>
-                        <Descriptions.Item label='更新时间'>{caseInfo.updated_at}</Descriptions.Item>
+                        <Descriptions.Item label='更新时间'>{caseInfo.update_date}</Descriptions.Item>
                       </Descriptions>
                       <TestCaseBottom setSuffix={setSuffix} headers={headers} setHeaders={setHeaders}
                                       body={body} setBody={setBody} case_id={case_id} formData={formData}

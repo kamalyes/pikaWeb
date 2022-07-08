@@ -139,7 +139,7 @@ const TestCaseRecorder = ({dispatch, project, recorder, testcase, loading}) => {
   }
 
   const getDownloadUrl = (cert) => {
-    return `${CONFIG.URL}/request/cert?cert=${cert}`
+    return `${CONFIG.URL}/ask/request/cert?cert=${cert}`
   }
 
   const menu = <Menu>

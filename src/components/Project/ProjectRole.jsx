@@ -20,12 +20,12 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
   useEffect(() => {
     const temp = {}
     users.forEach(item => {
-      temp[item.id] = item
+      temp[item.emp_no] = item
     })
     setUserMap(temp)
     setData([
       {
-        user_id: project.owner,
+        emp_no: project.owner,
         project_role: 'OWNER',
       },
       ...roles,
@@ -38,9 +38,7 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
       project_role: value,
     }
     const res = await updateProjectRole(body);
-    if (auth.response(res, true)) {
-      await fetchData();
-    }
+    await fetchData();
   }
 
   const onFinish = async values => {
@@ -49,37 +47,34 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
       project_id: params.id,
     }
     const res = await insertProjectRole(info);
-    if (auth.response(res, true)) {
-      setModal(false);
-      // 重新加载权限
-      await fetchData();
-    }
+    setModal(false);
+    // 重新加载权限
+    await fetchData();
   }
 
   const confirm = async item => {
     const res = await deleteProjectRole({id: item.id});
-    if (auth.response(res, true)) {
-      await fetchData();
-    }
+    await fetchData();
   }
 
   const onSearchRole = name => {
+    console.log("onSearchRole",name)
     if (name === '') {
       setData([
         {
-          user_id: project.owner,
+          emp_no: project.owner,
           project_role: 'OWNER',
         },
         ...roles,
       ])
       return
     }
-    const now = roles.filter(item => userMap[item.user_id].email.toLowerCase().indexOf(name.toLowerCase()) > -1
-      || userMap[item.user_id].name.toLowerCase().indexOf(name.toLowerCase()) > -1)
+    const now = roles.filter(item => userMap[item.emp_no].email.toLowerCase().indexOf(name.toLowerCase()) > -1
+      || userMap[item.emp_no].username.toLowerCase().indexOf(name.toLowerCase()) > -1)
 
     setData([
       {
-        user_id: project.owner,
+        emp_no: project.owner,
         project_role: 'OWNER',
       },
       ...now,
@@ -130,7 +125,7 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
 
   const fields = [
     {
-      name: 'user_id',
+      name: 'emp_no',
       label: '用户',
       required: true,
       component: <UserSelect users={users}/>,
@@ -165,9 +160,9 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
               <Skeleton avatar title={false} loading={item.loading} active>
                 <List.Item.Meta
                   avatar={<Avatar
-                    src={userMap[item.user_id]?.avatar || `https://joeschmoe.io/api/v1/${item.user_id}`}/>}
-                  title={userMap[item.user_id] ? userMap[item.user_id].name : 'loading'}
-                  description={userMap[item.user_id] ? userMap[item.user_id].email : 'loading'}/>
+                    src={userMap[item.emp_no]?.avatar || `https://joeschmoe.io/api/v1/${item.emp_no}`}/>}
+                  title={userMap[item.emp_no] ? userMap[item.emp_no].username : 'loading'}
+                  description={userMap[item.emp_no] ? userMap[item.emp_no].email : 'loading'}/>
               </Skeleton>
             </List.Item>
           )}

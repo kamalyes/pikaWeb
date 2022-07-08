@@ -11,8 +11,7 @@ import {
 import FormForModal from '@/components/PikaForm/FormForModal';
 import {connect, history} from 'umi';
 import {insertProject, listProject} from '@/services/project';
-import auth from '@/utils/auth';
-import {listUsers} from '@/services/user';
+import {queryAllUser} from '@/services/user';
 import noRecord from '@/assets/no_record.svg'
 import UserLink from "@/components/Button/UserLink";
 import {CONFIG} from "@/consts/config";
@@ -30,14 +29,12 @@ const Project = ({dispatch, project, loading}) => {
 
   const fetchData = async (current = pagination.current, size = pagination.pageSize) => {
     const res = await listProject({page: current, size});
-    if (auth.response(res)) {
-      setData(res.data);
-      setPagination({...pagination, current, total: res.total});
-    }
+    setData(res.data);
+    setPagination({...pagination, current, total: res.total});
   };
 
   const getUsers = async () => {
-    const user = await listUsers();
+    const user = await queryAllUser();
     const temp = {};
     user.forEach((item) => {
       temp[item.id] = item;
@@ -66,19 +63,15 @@ const Project = ({dispatch, project, loading}) => {
   const onSearchProject = async e => {
     const projectName = e.target.value;
     const res = await listProject({page: 1, size: pagination.pageSize, name: projectName});
-    if (auth.response(res)) {
-      setData(res.data);
-      setPagination({...pagination, current: 1, total: res.total});
-    }
+    setData(res.data);
+    setPagination({...pagination, current: 1, total: res.total});
   };
 
   const onHandleCreate = async (values) => {
     const res = await insertProject(values);
-    if (auth.response(res, true)) {
-      setVisible(false);
-      // 创建成功后自动获取第一页的数据, 因为项目会按创建时间排序
-      await fetchData(1);
-    }
+    setVisible(false);
+    // 创建成功后自动获取第一页的数据, 因为项目会按创建时间排序
+    await fetchData(1);
   };
 
   const fields = [
@@ -107,20 +100,34 @@ const Project = ({dispatch, project, loading}) => {
       type: 'select',
     },
     {
-      name: 'description',
-      label: '项目描述',
-      required: false,
-      message: '请输入项目描述',
-      type: 'textarea',
-      placeholder: '请输入项目描述',
-    },
-    {
       name: 'private',
       label: '是否私有',
       required: true,
       message: '请选择项目是否私有',
       type: 'switch',
       valuePropName: 'checked',
+    },
+    {
+      name: 'dingtalk_url',
+      label: '钉钉通知',
+      required: false,
+      type: 'textarea',
+      placeholder: '请输入钉钉通知机器人地址',
+    },
+    {
+      name: 'qy_wx_url',
+      label: '企微通知',
+      required: false,
+      type: 'textarea',
+      placeholder: '请输入企微通知机器人地址',
+    },
+    {
+      name: 'description',
+      label: '项目描述',
+      required: false,
+      message: '请输入项目描述',
+      type: 'textarea',
+      placeholder: '请输入项目描述',
     },
   ];
 
@@ -166,7 +173,7 @@ const Project = ({dispatch, project, loading}) => {
   return (
     <PageContainer title={false} breadcrumb={null}>
       <FormForModal
-        width={600}
+        width={800}
         title="添加项目"
         left={6}
         right={18}
@@ -210,12 +217,12 @@ const Project = ({dispatch, project, loading}) => {
               <Col key={item.id} span={6} style={{marginBottom: 24}}>
                 <Card hoverable className={styles.card}>
                   <Card.Meta
-                    avatar={<Avatar src={item.avatar || CONFIG.PROJECT_AVATAR_URL} size={48}/>}
+                    avatar={<Avatar src={item.avatar || CONFIG.PROJECT_AVATAR_URL} size={49}/>}
                     title={<CardTitle item={item}/>}
                     description={<div>
                       <p className={styles.description}>{item.description || '无'}</p>
                       <p>负责人 {<UserLink user={userMap[item.owner]}/>}</p>
-                      <p>更新时间 {item.updated_at}</p>
+                      <p>更新时间 {item.update_date}</p>
                     </div>}
                     onClick={() => {
                       history.push(`/project/${item.id}`);

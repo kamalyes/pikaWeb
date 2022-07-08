@@ -86,7 +86,7 @@ const BasicLayout = (props) => {
       });
     }
     if (currentUser && currentUser.uid) {
-      const ws = new WebSocket(`${CONFIG.WS_URL}/${currentUser.uid}`);
+      const ws = new WebSocket(`${CONFIG.WS_URL}/${currentUser.emp_no}`);
       ws.onmessage = function (event) {
         event.preventDefault()
         const messages = event.data;
