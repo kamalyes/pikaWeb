@@ -80,12 +80,12 @@ const UserModel = {
 
     * updateUser({payload}, {call, put}) {
       const response = yield call(updateUsers, payload);
-      return auth.response(response, true);
+      return true;
     },
 
     * deleteUser({payload}, {call, put}) {
       const response = yield call(deleteUsers, payload);
-      return auth.response(response, true);
+      return true;
     },
 
     * fetchUserList(_, {call, put}) {

@@ -74,10 +74,11 @@ request.interceptors.request.use((url, options) => {
  */
 request.interceptors.response.use(async (response, options) => {
   const {url, status} = response;
-  console.log("接口返回参数：response：", response)
   const data = await response.clone().json();
   const parse_status = +(status / 100);
   const href = window.location.href;
+  const ignore_pathname = ["/user/verifytoken", "/workspace/", "/workspace/testplan", "/user/alluser"]
+  console.log("接口返回参数：response：", response)
   console.log("接口返回的response_data：\n", data);
 
   if (parse_status === 2 && status % 100 > 0) {
@@ -100,7 +101,8 @@ request.interceptors.response.use(async (response, options) => {
 
   if (data.code === 200) {
     const {pathname} = new URL(url);
-    if (pathname !== "/user/verifytoken") {
+    console.log(pathname, ignore_pathname.indexOf(pathname))
+    if (ignore_pathname.indexOf(pathname) === -1) {
       message.info(JSON.stringify(data.message));
     }
   }
