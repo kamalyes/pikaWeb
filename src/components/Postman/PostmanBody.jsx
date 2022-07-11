@@ -213,7 +213,8 @@ const PostmanBody = ({
 
   // 拼接http请求
   const onRequest = async () => {
-    const url = form.getFieldValue('url')
+    const url = form.getFieldValue('url');
+    const base_path = form.getFieldValue('base_path');
     if (url === '') {
       notification.error({
         message: '请求Url不能为空',
@@ -224,7 +225,7 @@ const PostmanBody = ({
     setLoading(true);
     const params = {
       method: method || 'GET',
-      url,
+      url:`${base_path}${url}`,
       body,
       body_type: bodyType,
       headers: getHeaders(),
