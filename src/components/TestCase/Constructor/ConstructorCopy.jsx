@@ -69,7 +69,7 @@ const CopyTreeSelect = ({construct, dispatch, suffix = true}) => {
                   } else {
                     dispatch({
                       type: 'construct/save',
-                      payload: {testCaseConstructorData: {type: constructorType, public: true, enable: true}},
+                      payload: {testCaseConstructorData: {type: constructorType, public: true, is_usable: true}},
                     })
                   }
                 }}

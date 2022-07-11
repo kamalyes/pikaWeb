@@ -75,12 +75,12 @@ export default ({data, form, dispatch, testcaseData, constructorType}) => {
       }
     },
     {
-      name: 'enable',
-      label: '启用',
+      name: 'is_usable',
+      label: '是否可用',
       required: true,
       component: <Switch/>,
       valuePropName: 'checked',
-      initialValue: data.enable,
+      initialValue: data.is_usable,
       span: 6,
       layout: {
         labelCol: {span: 16},

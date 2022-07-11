@@ -92,9 +92,9 @@ const RedisConstructor = ({form, dispatch, construct, gconfig, suffix}) => {
                   </Form.Item>
                 </Col>
                 <Col span={6}>
-                  <Form.Item {...CONFIG.SWITCH_LAYOUT} label="启用" name="enable"
-                             rules={[{required: true, message: '请选择是否启用'}]}
-                             initialValue={testCaseConstructorData.enable || true}
+                  <Form.Item {...CONFIG.SWITCH_LAYOUT} label="是否可用" name="is_usable"
+                             rules={[{required: true, message: '请选择是否可用'}]}
+                             initialValue={testCaseConstructorData.is_usable || true}
                              valuePropName="checked">
                     <Switch/>
                   </Form.Item>

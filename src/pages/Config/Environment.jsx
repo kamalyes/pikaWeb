@@ -33,11 +33,13 @@ class Environment extends Component {
   fetchEnvironmentList = async (page = this.state.pagination.current, size = this.state.pagination.pageSize, name = this.state.name) => {
     this.setState({loading: true});
     const res = await listEnvironment({page, size, name});
-    this.setState({
-      data: res.data,
-      pagination: {total: res.total, current: page, pageSize: size},
-    });
-    this.setState({loading: false});
+    if (res !==undefined) {
+      this.setState({
+        data: res.data,
+        pagination: {total: res.total, current: page, pageSize: size},
+      });
+      this.setState({loading: false});
+    }
   };
 
   onSearch = async name => {
@@ -77,8 +79,8 @@ class Environment extends Component {
       },
       {
         title: '备注',
-        key: 'remarks',
-        dataIndex: 'remarks',
+        key: 'description',
+        dataIndex: 'description',
       },
       {
         title: '创建人',

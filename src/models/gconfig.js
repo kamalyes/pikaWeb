@@ -73,11 +73,11 @@ export default {
     * fetchSystemConfig({payload}, {call, put}) {
       const res = yield call(getSystemConfig)
       yield put({
-          type: 'save',
-          payload: {
-            configuration: res.data,
-          }
-        })
+        type: 'save',
+        payload: {
+          configuration: res.data,
+        }
+      })
     },
 
     * updateConfiguration({payload}, {call, _}) {
@@ -88,27 +88,24 @@ export default {
     // 获取数据库配置
     * fetchDbConfig({payload}, {call, put}) {
       const res = yield call(listDbConfig, payload);
-       yield put({
-          type: 'save',
-          payload: {
-            dbConfigData: res.data,
-          },
-        });
+      yield put({
+        type: 'save',
+        payload: {
+          dbConfigData: res.data,
+        },
+      });
     },
 
     // 新增数据库配置
     * insertDbConfig({payload}, {call, put}) {
       const res = yield call(insertDbConfig, payload);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {
-            databaseModal: false,
-          },
-        });
-        return true;
-      }
-      return false;
+      yield put({
+        type: 'save',
+        payload: {
+          databaseModal: false,
+        },
+      });
+      return true;
     },
 
     * onTestDbConfig({payload}, {call, put}) {
@@ -118,16 +115,13 @@ export default {
 
     * updateDbConfig({payload}, {call, put}) {
       const res = yield call(updateDbConfig, payload);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {
-            databaseModal: false,
-          },
-        });
-        return true;
-      }
-      return false;
+      yield put({
+        type: 'save',
+        payload: {
+          databaseModal: false,
+        },
+      });
+      return true;
     },
 
     * deleteDbConfig({payload}, {call, put}) {
@@ -141,25 +135,21 @@ export default {
       const state = yield select(state => state.gconfig);
       const res = yield call(listGConfig, payload);
       yield put({
-          type: 'save',
-          payload: {
-            data: res.data,
-            pagination: {
-              ...state.pagination,
-              current: payload.page,
-              total: res.total,
-            },
+        type: 'save',
+        payload: {
+          data: res.data,
+          pagination: {
+            ...state.pagination,
+            current: payload.page,
+            total: res.total,
           },
-        });
+        },
+      });
 
     },
 
     * fetchAllGConfig({payload}, {call, put}) {
       const res = yield call(listGConfig, {page: 1, size: 1000});
-      if (!auth.response(res)) {
-        message.error(res.detail);
-        return;
-      }
       yield put({
         type: 'save',
         payload: {
@@ -173,12 +163,10 @@ export default {
     * insertConfig({payload}, {call, put, select}) {
       const state = yield select(state => state.gconfig);
       const res = yield call(insertGConfig, payload);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {modal: false},
-        });
-      }
+      yield put({
+        type: 'save',
+        payload: {modal: false},
+      });
       yield put({
         type: 'fetchGConfig',
         payload: {
@@ -193,12 +181,10 @@ export default {
     * updateGConfig({payload}, {call, put, select}) {
       const res = yield call(updateGConfig, payload);
       const state = yield select(state => state.gconfig);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'save',
-          payload: {modal: false},
-        });
-      }
+      yield put({
+        type: 'save',
+        payload: {modal: false},
+      });
       yield put({
         type: 'fetchGConfig',
         payload: {
@@ -213,17 +199,15 @@ export default {
     * deleteGConfig({payload}, {call, put, select}) {
       const res = yield call(deleteGConfig, payload);
       const state = yield select(state => state.gconfig);
-      if (auth.response(res, true)) {
-        yield put({
-          type: 'fetchGConfig',
-          payload: {
-            page: state.pagination.current,
-            size: state.pagination.pageSize,
-            env: state.currentEnv,
-            key: state.name,
-          },
-        });
-      }
+      yield put({
+        type: 'fetchGConfig',
+        payload: {
+          page: state.pagination.current,
+          size: state.pagination.pageSize,
+          env: state.currentEnv,
+          key: state.name,
+        },
+      });
 
     },
 
@@ -322,12 +306,12 @@ export default {
     * listOssFile({_}, {call, put}) {
       const res = yield call(listFile);
       yield put({
-          type: 'save',
-          payload: {
-            ossFileList: res.data,
-            searchOssFileList: res.data,
-          }
-        })
+        type: 'save',
+        payload: {
+          ossFileList: res.data,
+          searchOssFileList: res.data,
+        }
+      })
     }
   },
 };

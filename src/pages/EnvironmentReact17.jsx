@@ -55,8 +55,8 @@ export default () => {
     },
     {
       title: "备注",
-      key: "remarks",
-      dataIndex: "remarks",
+      key: "description",
+      dataIndex: "description",
     },
     {
       title: "创建人",

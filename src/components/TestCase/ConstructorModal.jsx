@@ -83,7 +83,7 @@ const ConstructorModal = ({
       type: testCaseConstructorData.type,
       name: values.name,
       constructor_json: getConstructorJson(values),
-      enable: values.enable,
+      is_usable: values.is_usable,
       case_id: caseId,
       public: values.public,
     }
@@ -138,7 +138,7 @@ const ConstructorModal = ({
       testCaseConstructorData: {
         type: constructorType,
         public: true,
-        enable: true,
+        is_usable: true,
       },
       currentStep: currentStep + 1,
     })

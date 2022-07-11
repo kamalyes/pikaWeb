@@ -11,7 +11,6 @@ import type {ColumnsType, ColumnType} from 'antd/lib/table';
 import {DeleteTwoTone, SearchOutlined} from "@ant-design/icons";
 import Highlighter from 'react-highlight-words';
 
-
 interface RequestInfoProps {
   dataSource: Array<RequestInfo>;
   rowKey?: string;
@@ -77,7 +76,6 @@ const RequestInfoList: React.FC<RequestInfoProps> = ({dataSource, dispatch, load
     clearFilters();
     setSearchText('');
   };
-  // @ts-ignore
   // @ts-ignore
   const getColumnSearchProps = (dataIndex: DataIndex): ColumnType<RequestInfo> => ({
     filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (

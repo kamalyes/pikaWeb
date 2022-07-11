@@ -66,7 +66,7 @@ export async function insertGConfig(params) {
 
 export async function deleteGConfig(params) {
   return request(`${CONFIG.URL}/itstem/gconfig/delete`, {
-    method: 'GET',
+    method: 'DELETE',
     params,
     headers: auth.headers(),
   });
@@ -182,7 +182,7 @@ export async function insertGateway(data) {
 
 export async function deleteGateway(params) {
   return request(`${CONFIG.URL}/itstem/gateway/delete`, {
-    method: 'GET',
+    method: 'DELETE',
     params,
     headers: auth.headers(),
   });

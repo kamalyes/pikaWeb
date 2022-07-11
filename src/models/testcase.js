@@ -93,13 +93,15 @@ export default {
 
     * queryTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(queryTestcaseDirectory, payload);
-      yield put({
-        type: 'save',
-        payload: {
-          directoryName: res.data.name,
-          casePermission: true
-        }
-      })
+      if (res.data) {
+        yield put({
+          type: 'save',
+          payload: {
+            directoryName: res.data.name,
+            casePermission: true
+          }
+        })
+      }
     },
 
     * insertTestcaseDirectory({payload}, {call, put}) {

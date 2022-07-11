@@ -80,8 +80,8 @@ const GConfig = ({gconfig, user, loading, dispatch}) => {
     },
     {
       title: '是否可用',
-      dataIndex: 'enable',
-      key: 'enable',
+      dataIndex: 'is_usable',
+      key: 'is_usable',
       render: text => <Badge status={text ? 'processing' : 'default'} text={text ? '使用中' : '已禁止'}/>,
     },
     {
@@ -146,7 +146,7 @@ const GConfig = ({gconfig, user, loading, dispatch}) => {
       component: <PikaAceEditor language={getType()} setEditor={setEditor} height={250}/>,
     },
     {
-      name: 'enable',
+      name: 'is_usable',
       label: '是否可用',
       required: true,
       component: <Switch/>,

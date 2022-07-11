@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   Col,
+  Collapse,
   Dropdown,
   Form,
   Input,
@@ -18,7 +19,6 @@ import {
 import {DeleteTwoTone, DownOutlined, EditTwoTone, QuestionCircleOutlined} from '@ant-design/icons';
 import EditableTable from '@/components/Table/EditableTable';
 import {httpRequest} from '@/services/ask';
-import auth from '@/utils/auth';
 import {listGConfig} from "@/services/configure";
 import FormData from "@/components/Postman/FormData";
 import {connect} from 'umi';
@@ -27,6 +27,7 @@ import {IconFont} from "@/components/Icon/IconFont";
 
 const {Option} = Select;
 const {TabPane} = Tabs;
+const {Panel} = Collapse;
 
 const STATUS = {
   200: {color: '#67C23A', text: 'OK'},
@@ -74,6 +75,7 @@ const PostmanBody = ({
   const [editor, setEditor] = useState(null);
   const [open, setOpen] = useState(false);
   const {ossFileList, envMap, addressList} = gconfig;
+  const [showPanel, setShowPanel] = useState(['1']);
 
   const parseFormData = () => {
     if (body) {
@@ -218,6 +220,7 @@ const PostmanBody = ({
       });
       return;
     }
+    setResponse({})
     setLoading(true);
     const params = {
       method: method || 'GET',
@@ -231,7 +234,10 @@ const PostmanBody = ({
     }
     const res = await httpRequest(params);
     setLoading(false);
-    setResponse(res.data);
+    if (res.code === 200) {
+      setResponse(res.data);
+      setShowPanel(['2'])
+    }
   };
 
   const onDelete = (columnType, key) => {
@@ -418,7 +424,10 @@ const PostmanBody = ({
                   <Option key="GET" value="GET">GET</Option>
                   <Option key="POST" value="POST">POST</Option>
                   <Option key="PUT" value="PUT">PUT</Option>
+                  <Option key="HEAD" value="HEAD">HEAD</Option>
+                  <Option key="TRACE" value="TRACE">TRACE</Option>
                   <Option key="DELETE" value="DELETE">DELETE</Option>
+                  <Option key="OPTIONS" value="OPTIONS">OPTIONS</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -437,25 +446,6 @@ const PostmanBody = ({
                          form.setFieldsValue({url: e.target.value})
                          setUrl(e.target.value);
                        }}/>
-                {/*<AutoComplete*/}
-                {/*  open={open}*/}
-                {/*  options={options}*/}
-                {/*  placeholder="请输入要请求的url"*/}
-                {/*  onChange={(string, e) => {*/}
-                {/*    if (e.key && url && url.indexOf(string) === -1) {*/}
-                {/*      const value = `${url}${string}`*/}
-                {/*      splitUrl(value);*/}
-                {/*      form.setFieldsValue({url: value})*/}
-                {/*      setUrl(value);*/}
-                {/*    } else {*/}
-                {/*      splitUrl(string);*/}
-                {/*      form.setFieldsValue({url: string});*/}
-                {/*      setUrl(string);*/}
-                {/*    }*/}
-                {/*  }}*/}
-                {/*>*/}
-                {/*  <Input addonBefore={prefixSelector}/>*/}
-                {/*</AutoComplete>*/}
               </Form.Item>
             </Col>
           </Form>
@@ -473,89 +463,100 @@ const PostmanBody = ({
           </div>
         </Col>
       </Row>
-      <Row style={{marginTop: 8}}>
-        <Tabs defaultActiveKey="1" style={{width: '100%'}}>
-          <TabPane tab="Params" key="1">
-            <EditableTable
-              columns={columns('params')}
-              title="Query Params"
-              dataSource={paramsData}
-              setDataSource={setParamsData}
-              extra={joinUrl}
-              editableKeys={editableKeys}
-              setEditableRowKeys={setEditableRowKeys}
-            />
-          </TabPane>
-          <TabPane tab="Headers" key="2">
-            <EditableTable
-              columns={columns('headers')}
-              title="Headers"
-              dataSource={headers}
-              setDataSource={setHeaders}
-              editableKeys={headersKeys}
-              setEditableRowKeys={setHeadersKeys}
-            />
-          </TabPane>
-          <TabPane tab="Body" key="3">
-            <Row>
-              <Radio.Group
-                defaultValue={0}
-                value={bodyType}
-                onChange={(e) => {
-                  setBodyType(e.target.value)
-                  if (e.target.value === 'form-data') {
-                    // 获取oss文件
-                    dispatch({
-                      type: 'gconfig/listOssFile'
-                    })
-                  }
-                }}
-              >
-                <Radio value={0}>none</Radio>
-                <Radio value={2}>form-data</Radio>
-                <Radio value={3}>x-www-form-urlencoded</Radio>
-                <Radio value={1}>raw</Radio>
-                <Radio value={4}>binary</Radio>
-                <Radio value={5}>GraphQL</Radio>
-              </Radio.Group>
-              {bodyType === 1 ? (
-                <Dropdown style={{marginLeft: 8}} overlay={menu} trigger={['click']}>
-                  <a onClick={(e) => e.preventDefault()}>
-                    {rawType} <DownOutlined/>
-                  </a>
-                </Dropdown>
-              ) : null}
-            </Row>
-            {getBody(bodyType)}
-          </TabPane>
-        </Tabs>
-      </Row>
-      <Row gutter={[8, 8]}>
-        {Object.keys(response).length === 0 ? null : (
-          <Tabs style={{width: '100%'}} tabBarExtraContent={tabExtra(response)}>
-            <TabPane tab="Body" key="1">
-              <JSONAceEditor value={response.response} readOnly={true}
-                             height="30vh" setEditor={setEditor}/>
-            </TabPane>
-            <TabPane tab="Cookie" key="2">
-              <Table
-                columns={resColumns}
-                dataSource={toTable('cookies')}
-                size="small"
-                pagination={false}
-              />
-            </TabPane>
-            <TabPane tab="Headers" key="3">
-              <Table
-                columns={resColumns}
-                dataSource={toTable('response_headers')}
-                size="small"
-                pagination={false}
-              />
-            </TabPane>
-          </Tabs>
-        )}
-      </Row>
+
+      <Collapse defaultActiveKey={['1']} activeKey={showPanel} style={{marginTop: 18}} onChange={(key) => {
+        setShowPanel(key)
+      }}>
+        <Panel header="Request" key="1">
+
+          <Row style={{marginTop: 8}}>
+            <Tabs defaultActiveKey="1" style={{width: '100%'}}>
+              <TabPane tab="Params" key="1">
+                <EditableTable
+                  columns={columns('params')}
+                  title="Query Params"
+                  dataSource={paramsData}
+                  setDataSource={setParamsData}
+                  extra={joinUrl}
+                  editableKeys={editableKeys}
+                  setEditableRowKeys={setEditableRowKeys}
+                />
+              </TabPane>
+              <TabPane tab="Headers" key="2">
+                <EditableTable
+                  columns={columns('headers')}
+                  title="Headers"
+                  dataSource={headers}
+                  setDataSource={setHeaders}
+                  editableKeys={headersKeys}
+                  setEditableRowKeys={setHeadersKeys}
+                />
+              </TabPane>
+              <TabPane tab="Body" key="3">
+                <Row>
+                  <Radio.Group
+                    defaultValue={0}
+                    value={bodyType}
+                    onChange={(e) => {
+                      setBodyType(e.target.value)
+                      if (e.target.value === 'form-data') {
+                        // 获取oss文件
+                        dispatch({
+                          type: 'gconfig/listOssFile'
+                        })
+                      }
+                    }}
+                  >
+                    <Radio value={0}>none</Radio>
+                    <Radio value={2}>form-data</Radio>
+                    <Radio value={3}>x-www-form-urlencoded</Radio>
+                    <Radio value={1}>raw</Radio>
+                    <Radio value={4}>binary</Radio>
+                    <Radio value={5}>GraphQL</Radio>
+                  </Radio.Group>
+                  {bodyType === 1 ? (
+                    <Dropdown style={{marginLeft: 8}} overlay={menu} trigger={['click']}>
+                      <a onClick={(e) => e.preventDefault()}>
+                        {rawType} <DownOutlined/>
+                      </a>
+                    </Dropdown>
+                  ) : null}
+                </Row>
+                {getBody(bodyType)}
+              </TabPane>
+            </Tabs>
+          </Row>
+
+        </Panel>
+        <Panel header="Response" key="2">
+          <Row gutter={[8, 8]}>
+            {Object.keys(response).length === 0 ? null : (
+              <Tabs style={{width: '100%'}} tabBarExtraContent={tabExtra(response)}>
+                <TabPane tab="Body" key="1">
+                  <JSONAceEditor value={response.response} readOnly={true}
+                                 height="30vh" setEditor={setEditor}/>
+                </TabPane>
+                <TabPane tab="Cookie" key="2">
+                  <Table
+                    columns={resColumns}
+                    dataSource={toTable('cookies')}
+                    size="small"
+                    pagination={false}
+                  />
+                </TabPane>
+                <TabPane tab="Headers" key="3">
+                  <Table
+                    columns={resColumns}
+                    dataSource={toTable('response_headers')}
+                    size="small"
+                    pagination={false}
+                  />
+                </TabPane>
+              </Tabs>
+            )}
+          </Row>
+        </Panel>
+      </Collapse>
     </Form>
   );
 };

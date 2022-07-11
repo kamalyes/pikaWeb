@@ -4,7 +4,7 @@ import {CONFIG} from "@/consts/config";
 import auth from "@/utils/auth";
 
 export async function listTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/list`, {
+  return request(`${CONFIG.URL}/testplan/list`, {
     method: 'GET',
     params,
     headers: auth.headers(),
@@ -21,7 +21,7 @@ export async function listTestPlanCaseTree(params) {
 }
 
 export async function insertTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/insert`, {
+  return request(`${CONFIG.URL}/testplan/insert`, {
     method: 'POST',
     data: params,
     headers: auth.headers(),
@@ -29,7 +29,7 @@ export async function insertTestPlan(params) {
 }
 
 export async function updateTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/update`, {
+  return request(`${CONFIG.URL}/testplan/update`, {
     method: 'POST',
     data: params,
     headers: auth.headers(),
@@ -37,7 +37,7 @@ export async function updateTestPlan(params) {
 }
 
 export async function deleteTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/delete`, {
+  return request(`${CONFIG.URL}/testplan/delete`, {
     method: 'GET',
     params,
     headers: auth.headers(),
@@ -46,7 +46,7 @@ export async function deleteTestPlan(params) {
 
 
 export async function executeTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/execute`, {
+  return request(`${CONFIG.URL}/testplan/execute`, {
     method: 'GET',
     params,
     headers: auth.headers(),
@@ -59,7 +59,7 @@ export async function executeTestPlan(params) {
  * @returns {Promise<*>}
  */
 export async function followTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/follow`, {
+  return request(`${CONFIG.URL}/testplan/follow`, {
     method: 'GET',
     params,
     headers: auth.headers(),
@@ -72,7 +72,7 @@ export async function followTestPlan(params) {
  * @returns {Promise<*>}
  */
 export async function unFollowTestPlan(params) {
-  return request(`${CONFIG.URL}/testcase/plan/unfollow`, {
+  return request(`${CONFIG.URL}/testplan/unfollow`, {
     method: 'GET',
     params,
     headers: auth.headers(),

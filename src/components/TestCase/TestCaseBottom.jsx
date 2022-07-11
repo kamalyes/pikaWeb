@@ -38,7 +38,7 @@ const TestCaseBottom = ({
       payload: {
         constructorModal: true, testCaseConstructorData: {
           public: true,
-          enable: true,
+          is_usable: true,
         },
         currentStep: 0,
         constructRecord: {}
@@ -121,7 +121,7 @@ const TestCaseBottom = ({
         type: 'construct/update',
         payload: {
           ...record,
-          enable: value
+          is_usable: value
         }
       })
     }
@@ -129,13 +129,13 @@ const TestCaseBottom = ({
       if (createMode) {
         newData.forEach((v, index) => {
           if (index === record.index) {
-            v.enable = value
+            v.is_usable = value
           }
         })
       } else {
         newData.forEach(v => {
           if (v.id === record.id) {
-            v.enable = value
+            v.is_usable = value
           }
         })
       }
@@ -216,7 +216,7 @@ const TestCaseBottom = ({
       key: 'enable',
       dataIndex: 'enable',
       className: 'drag-visible',
-      render: (enable, record) => <Switch defaultChecked={record.enable} onChange={async value => {
+      render: (enable, record) => <Switch defaultChecked={record.is_usable} onChange={async value => {
         await onSwitchConstructor(record, value)
       }}/>
     },
@@ -342,10 +342,10 @@ const TestCaseBottom = ({
                   <Col span={8}>
                     <Card style={{height: 400, overflow: 'auto'}} hoverable bordered={false}>
                       {
-                        preConstructor.filter(item => item.enable).length === 0 ? <NoRecord2 desc="暂无开启的前置条件"/> :
+                        preConstructor.filter(item => item.is_usable).length === 0 ? <NoRecord2 desc="暂无开启的前置条件"/> :
                           <Timeline>
                             {
-                              preConstructor.map((item, index) => item.enable ?
+                              preConstructor.map((item, index) => item.is_usable ?
                                 <Timeline.Item key={index}>
                                   <div key={index}><Badge count={index + 1} key={index}
                                                           style={{backgroundColor: '#a6d3ff'}}/> 名称: {item.type === 0 ?
@@ -426,10 +426,10 @@ const TestCaseBottom = ({
                   <Col span={8}>
                     <Card style={{height: 400, overflow: 'auto'}} hoverable bordered={false}>
                       {
-                        postConstructor.filter(item => item.enable).length === 0 ? <NoRecord desc="暂无开启的后置条件"/> :
+                        postConstructor.filter(item => item.is_usable).length === 0 ? <NoRecord desc="暂无开启的后置条件"/> :
                           <Timeline>
                             {
-                              postConstructor.map((item, index) => item.enable ?
+                              postConstructor.map((item, index) => item.is_usable ?
                                 <Timeline.Item key={index}>
                                   <div key={index}><Badge count={index + 1} key={index}
                                                           style={{backgroundColor: '#a6d3ff'}}/> 名称: {item.type === 0 ?

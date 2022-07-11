@@ -19,7 +19,7 @@ export default {
     searchConstructor: undefined,
     testCaseConstructorData: {
       public: true,
-      enable: true,
+      is_usable: true,
     },
     testcaseData: [],
     constructorData: [],
@@ -86,7 +86,7 @@ export default {
       const json_data = JSON.parse(res.data.constructor_json);
       let ans = {
         value: res.data.value,
-        enable: res.data.enable,
+        is_usable: res.data.is_usable,
         type: res.data.type,
         public: res.data.public,
         name: res.data.name,

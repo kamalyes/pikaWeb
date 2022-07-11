@@ -145,7 +145,7 @@ export default {
       span: 24,
     },
     {
-      name: 'remarks',
+      name: 'description',
       label: '备注',
       required: false,
       message: '请输入备注',

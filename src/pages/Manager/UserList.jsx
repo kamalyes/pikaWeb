@@ -68,7 +68,7 @@ const UserInfo = ({user, dispatch, loading}) => {
       key: 'last_login_at',
     },
     {
-      title: '🚫 是否启用',
+      title: '🚫 是否可用',
       dataIndex: 'is_valid',
       key: 'is_valid',
       render: (is_valid, record) => <Switch defaultChecked={is_valid} onChange={e => {
