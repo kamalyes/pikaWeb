@@ -498,14 +498,16 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
                   <Col span={24}>
                     <div style={{height: 40, lineHeight: '40px'}}>
                       {
-                        editing ? <Select style={{marginLeft: 32, width: 150}} showSearch allowClear
+                        // editing ? <Select style={{marginLeft: 32, width: 150}} showSearch allowClear
+                        editing ? <Select style={{marginLeft: 32, width: 150}} showSearch
                                           placeholder="请选择项目" value={project_id} autoFocus={true}
                                           onChange={e => {
                                             if (e !== undefined) {
                                               save({project_id: e})
                                             }
-                                            setEditing(false);
                                           }}
+                                          onSelect={e=>{setEditing(false)}}
+                                          onBlur={e => {setEditing(false)}}
                                           filterOption={(input, option) =>
                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                           }>
