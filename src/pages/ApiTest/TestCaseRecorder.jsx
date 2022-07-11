@@ -105,6 +105,9 @@ const TestCaseRecorder = ({dispatch, project, recorder, testcase, loading}) => {
     dispatch({
       type: 'recorder/stopRecord',
     })
+     dispatch({
+      type: 'recorder/queryRecordStatus',
+    })
   }
 
   const onGenerateCase = async () => {
