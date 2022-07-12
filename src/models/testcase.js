@@ -67,13 +67,55 @@ export default {
       }
     },
   },
+//   {
+//     "code": 200,
+//     "message": "操作成功",
+//     "data": [
+//         {
+//             "title": "4444",
+//             "key": 4,
+//             "children": []
+//         },
+//         {
+//             "title": "555",
+//             "key": 2,
+//             "children": [
+//                 {
+//                     "title": "555555",
+//                     "key": 3,
+//                     "children": [
+//                         {
+//                             "title": "8888",
+//                             "key": 5,
+//                             "children": [],
+//                             "disabled": false
+//                         }
+//                     ],
+//                     "disabled": false
+//                 }
+//             ]
+//         }
+//     ]
+// }
   effects: {
     * listTestcaseDirectory({payload}, {call, put}) {
       const res = yield call(listTestcaseTree, payload);
+      const resolveTreeData= function (tree,curLayer){
+       return tree.map((item,index)=>{
+         const curNode=  `${curLayer}-${index}`;
+         item.value = curNode;
+         if(item.children.length){
+           item.children = resolveTreeData(item.children,curNode)
+         }
+         return item;
+       })
+      };
+      const newData = resolveTreeData(res.data,'0');
+      console.log(newData,'newData')
       yield put({
         type: 'save',
         payload: {
-          directory: res.data,
+          directory:newData,
           currentDirectory: res.data.length > 0 ? [res.data[0].key] : []
         }
       })
@@ -115,6 +157,7 @@ export default {
     },
 
     * moveTestCaseToDirectory({payload}, {call, put}) {
+      console.log('payload:',payload)
       const res = yield call(moveTestCase, payload);
       return true
     },

@@ -76,6 +76,7 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
   const [name, setName] = useState('');
   const [moveModal, setMoveModal] = useState(false);
   const [recorderModal, setRecorderModal] = useState(false);
+  const [selectTree, setSelectTree] = useState(null);
 
   const rowSelection = {
     selectedRowKeys,
@@ -309,12 +310,14 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
     }
   }
 
-  const onMove = async values => {
+  const onMove = async () => {
+    // console.log(values,'valuessssss')
     const res = await dispatch({
       type: 'testcase/moveTestCaseToDirectory',
       payload: {
         id_list: selectedRowKeys,
-        directory_id: values.directory_id,
+        // directory_id: values.directory_id,
+        directory_id: selectTree.key,
         project_id,
       },
     })
@@ -393,10 +396,12 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
       required: true,
       placeholder: "请选择要移动到的目录",
       type: 'select',
-      component: <TreeSelect treeData={directory} showSearch treeDefaultExpandAll/>
+      component: <TreeSelect onSelect={(value, node) => {
+        setSelectTree(node)
+      }}
+                             treeData={directory} showSearch/>
     }
   ]
-
   const getProject = () => {
     if (projects.length === 0) {
       return 'loading...'

@@ -23,9 +23,7 @@ const FormForModal = ({
                       }) => {
   const [form] = Form.useForm();
   const onOk = () => {
-    form.validateFields().then((values) => {
-      onFinish(values);
-    })
+    onFinish();
   }
 
   useEffect(() => {
