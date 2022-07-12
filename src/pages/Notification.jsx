@@ -114,7 +114,7 @@ const Notification = ({global, loading, user, dispatch}) => {
                   <List.Item.Meta
                     avatar={<UserLink user={userMap[item.sender]}/>}
                     title={<a href={item.link}>{item.msg_title}</a>}
-                    description={item.created_at}
+                    description={item.create_date}
                   />
                   <div style={{marginRight: 12}}>
                     {/*<TooltipIcon title="点击已读" font={16} icon={<CheckOutlined style={{color: '#22ff22'}}/>}/>*/}

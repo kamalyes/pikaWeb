@@ -50,20 +50,6 @@ export const CONFIG = {
   },
   EDITOR_THEME: ["material-one-dark", 'atom-one-dark', 'vs-dark', 'ambiance', 'chrome', 'dracula', 'eclipse', 'github', 'merbivore', 'merbivore_soft', 'monokai', 'terminal', 'xcode'],
   PIC_URL: 'https://cdn.pika.fun/',
-  PROJECT_ROLE: {
-    OWNER: '负责人',
-    ADMIN: '组长',
-    MEMBER: '组员',
-  },
-  PROJECT_ROLE_TO_ID: {
-    OWNER: '2',
-    MEMBER: '0',
-    ADMIN: '1',
-  },
-  PROJECT_TAG: {
-    OWNER: 'purple',
-    MEMBER: 'pink',
-  },
   CONFIG_TYPE_TAG: {
     JSON: 'green',
     Yaml: 'pink',
@@ -125,9 +111,12 @@ export const CONFIG = {
   },
   REQUEST_METHOD: {
     'GET': <Tag color="success">GET</Tag>,
-    'POST': <Tag color="blue">POST</Tag>,
     'PUT': <Tag color="cyan">PUT</Tag>,
+    'POST': <Tag color="blue">POST</Tag>,
+    'HEAD': <Tag color="magenta">HEAD</Tag>,
     'DELETE': <Tag color="error">DELETE</Tag>,
+    'TRACE': <Tag color="yellow">TRACE</Tag>,
+    'OPTIONS': <Tag color="purple">OPTIONS</Tag>,
   },
   CASE_TAG: {
     'P0': 'magenta',

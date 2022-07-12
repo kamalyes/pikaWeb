@@ -35,11 +35,9 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
   const execute = async () => {
     setLoading(true);
     const res = await executeCase({case_id: caseId});
-    if (auth.response(res, true)) {
-      setTestResult(res.data);
-      setExecuteStatus(res.data.asserts);
-      setResultModal(true);
-    }
+    setTestResult(res.data);
+    setExecuteStatus(res.data.asserts);
+    setResultModal(true);
     setLoading(false);
   };
 
@@ -47,7 +45,7 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
     setLoading(true);
     const case_list = checkedKeys.filter(v => v.indexOf("case_") > -1).map(v => parseInt(v.replace("case_", ""), 10))
     const res = await executeSelectedCase(case_list)
-    if (auth.response(res, true)) {
+    if (res.code === 200) {
       confirm({
         title: '用例执行完毕, 是否跳转到报告页面?',
         icon: <QuestionCircleOutlined/>,
@@ -104,7 +102,7 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
     }
     setLoading(true);
     const res = await queryTestCase({caseId});
-    if (auth.response(res)) {
+    if (res.code === 200) {
       setData(res.data);
     }
     setLoading(false);
@@ -132,7 +130,6 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
       request_headers: translateHeaders(), body
     };
     const res = await updateTestCase(params);
-    auth.response(res, true);
     setEditing(false);
     await init()
   };
@@ -166,10 +163,10 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
                           <a href={data.url} style={{fontSize: 14}}>{data.url}</a>
                         </Descriptions.Item>
                         <Descriptions.Item
-                          label='创建人'>{userMap[data.create_emp_no] !== undefined ? userMap[data.create_emp_no].name : 'loading...'}</Descriptions.Item>
+                          label='创建人'>{userMap[data.create_emp_no] !== undefined ? userMap[data.create_emp_no].create_emp_no : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item
-                          label='更新人'>{userMap[data.update_user] !== undefined ? userMap[data.update_user].name : 'loading...'}</Descriptions.Item>
-                        <Descriptions.Item label='创建时间'>{data.created_at}</Descriptions.Item>
+                          label='更新人'>{userMap[data.update_emp_no] !== undefined ? userMap[data.update_emp_no].update_emp_no : 'loading...'}</Descriptions.Item>
+                        <Descriptions.Item label='创建时间'>{data.create_date}</Descriptions.Item>
                         <Descriptions.Item label='更新时间'>{data.update_date}</Descriptions.Item>
                         <Descriptions.Item label='用例标签' span={2}>{
                           <div style={{textAlign: 'center'}}>
@@ -195,7 +192,6 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
               </Row>
               :
 
-
               <div>
                 <CaseDetail form={form} layout={{
                   labelCol: {span: 6},
@@ -206,9 +202,9 @@ export default ({caseId, userMap, setExecuteStatus, project, checkedKeys}) => {
                   status: data.status ? data.status.toString() : null,
                   tag: data.tag ? data.tag.split(',') : [],
                 }}
-                            onFinish={onFinish} fields={fields.CaseDetail} body={body} setBody={setBody}
-                            headers={headers}
-                            setHeaders={setHeaders}/>
+                  onFinish={onFinish} fields={fields.CaseDetail} body={body} setBody={setBody}
+                  headers={headers}
+                  setHeaders={setHeaders}/>
                 <div style={{textAlign: 'center', marginTop: 16}}>
                   <Button onClick={() => setEditing(false)}>取消</Button>
                   <Button type='primary' style={{marginLeft: 8}} onClick={onFinish}>保存</Button>

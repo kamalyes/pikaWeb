@@ -299,7 +299,7 @@ export default {
 
     * removeOssFile({payload}, {call, put}) {
       const res = yield call(deleteFile, payload);
-      if (auth.response(res, true)) {
+      if (res.code === 200) {
         yield put({
           type: 'listOssFile',
         })

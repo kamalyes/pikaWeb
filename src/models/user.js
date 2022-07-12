@@ -13,7 +13,6 @@ import {
 import {history} from 'umi';
 import {getPageQuery} from "@/utils/utils";
 import {message} from "antd";
-import auth from "@/utils/auth";
 import {stringify} from "querystring";
 
 // const client_id = `c46c7ae33442d13498cd`;
@@ -202,7 +201,7 @@ const UserModel = {
         type: 'saveCurrentUser',
         payload: response.data,
       });
-      // if (auth.response(response)) {
+      // if (response.code === 200) {
       //   yield put({
       //     type: 'saveCurrentUser',
       //     payload: response.result,

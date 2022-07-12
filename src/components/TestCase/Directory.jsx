@@ -11,7 +11,6 @@ import {
 } from '@ant-design/icons';
 import CaseForm from '@/components/TestCase/CaseForm';
 import {createTestCase, insertTestCaseAsserts} from '@/services/testcase';
-import auth from '@/utils/auth';
 import TestCaseDetail from '@/components/TestCase/TestCaseDetail';
 import fields from '@/consts/fields';
 import FormForModal from '@/components/PikaForm/FormForModal';
@@ -105,7 +104,7 @@ export default ({loading, treeData, fetchData, projectData, userMap}) => {
       tag: values.tag !== undefined ? values.tag.join(',') : null,
       project_id: projectData.id,
     });
-    if (auth.response(res, true)) {
+    if (res.code === 200) {
       setDrawer(false);
       await fetchData();
     }
@@ -174,10 +173,8 @@ export default ({loading, treeData, fetchData, projectData, userMap}) => {
   const onSaveAssert = async values => {
     const data = {case_id: assertCaseId, ...values};
     const res = await insertTestCaseAsserts(data);
-    if (auth.response(res, true)) {
-      setAssertModal(false);
-      await fetchData();
-    }
+    setAssertModal(false);
+    await fetchData();
   };
 
   const RenderView = () => {

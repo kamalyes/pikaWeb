@@ -6,7 +6,6 @@ import {
   updateConstructorData,
   updateConstructorOrder
 } from "@/services/constructor";
-import auth from "@/utils/auth";
 import {listTestCaseTree} from "@/services/testcase";
 import common from "@/utils/common";
 
@@ -37,7 +36,7 @@ export default {
   effects: {
     * insert({payload}, {call, put}) {
       const res = yield call(insertConstructorData, payload);
-      if (auth.response(res, true)) {
+      if (res.code === 200) {
         yield put({
           type: 'testcase/save',
           payload: {

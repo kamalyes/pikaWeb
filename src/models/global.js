@@ -46,13 +46,11 @@ const GlobalModel = {
           broadcast,
           personal,
         })
-        auth.response(res)
       }
     },
 
     * deleteNotice({payload}, {call, put}) {
       const res = yield call(deleteNotice, payload.idList)
-      auth.response(res, true)
     }
   },
   reducers: {

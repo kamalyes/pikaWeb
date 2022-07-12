@@ -220,7 +220,7 @@ export default {
       const {testData} = yield select(state => state.testcase)
       const {env} = payload;
       const res = yield call(insertTestcaseData, payload);
-      if (auth.response(res, true)) {
+      if (res.code === 200) {
         const newData = {...testData};
         if (newData[parseInt(env, 10)] === undefined) {
           newData[parseInt(env, 10)] = [res.data]
@@ -240,7 +240,7 @@ export default {
       const {testData} = yield select(state => state.testcase)
       const {env} = payload;
       const res = yield call(updateTestcaseData, payload);
-      if (auth.response(res, true)) {
+      if (res.code === 200) {
         const newData = {...testData};
         const temp = newData[parseInt(env, 10)]
         const index = temp.findIndex((item) => res.data.id === item.id);
@@ -268,7 +268,7 @@ export default {
 
     * onlinePyScript({payload}, {call, _}) {
       const res = yield call(onlinePyScript, payload);
-      if (auth.response(res, false)) {
+      if (res.code === 200) {
         return res.data
       }
       return "None"

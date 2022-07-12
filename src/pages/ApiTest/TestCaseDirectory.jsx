@@ -386,7 +386,6 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
       type: 'input',
     }
   ];
-
   const moveFields = [
     {
       name: 'directory_id',
