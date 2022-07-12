@@ -165,7 +165,7 @@ const BaseView = ({user, loading, dispatch}) => {
                 onChange={onChange}
                 placeholder="请选择省市区籍贯"
                 showSearch={filter}
-                defaultValue={currentUser.location.split(',')}
+                defaultValue={currentUser?.location?.split(',')??''}
               />
             </ProForm>
           </div>

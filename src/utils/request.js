@@ -71,14 +71,15 @@ request.interceptors.request.use((url, options) => {
 
 /**
  * 响应拦截器
+ * options 包含 credentials、errorHandler、headers、method、params、
  */
 request.interceptors.response.use(async (response, options) => {
   const {url, status, headers} = response;
   const data = await response.clone().json();
   const parse_status = +(status / 100);
-  const req_method = headers.get.name;
+  const req_method = options.method.toLowerCase();
   const href = window.location.href;
-  const ignore_pathname = ["/user/verifytoken", "/workspace/", "/workspace/testplan", "/user/alluser"]
+  const ignore_path = ["/user/verifytoken", "/workspace/", "/workspace/testplan", "/user/alluser"]
   const ignore_method = ["get"]
   console.log("接口返回参数：response：", response)
   console.log("接口返回的response_data：\n", data);
@@ -104,7 +105,7 @@ request.interceptors.response.use(async (response, options) => {
   if (data.code === 200) {
     const {pathname} = new URL(url);
     console.log("ignore_tips：", req_method, pathname)
-    if (ignore_pathname.indexOf(pathname) === -1 && ignore_method.indexOf(req_method) === -1) {
+    if (ignore_path.indexOf(pathname) === -1 && ignore_method.indexOf(req_method) === -1) {
       message.info(JSON.stringify(data.message));
     }
   }
