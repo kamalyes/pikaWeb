@@ -110,7 +110,10 @@ export default {
 
     * onTestDbConfig({payload}, {call, put}) {
       const res = yield call(onTestDbConfig, payload);
-      return true
+      if (res.code===200){
+        return true
+      }
+      return false
     },
 
     * updateDbConfig({payload}, {call, put}) {

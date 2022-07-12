@@ -136,7 +136,7 @@ const Project = ({dispatch, project, loading}) => {
   const menu = item => <Menu>
     <Menu.Item icon={<AliwangwangOutlined/>}>
       <a>
-        申请权限
+        配置权限
       </a>
     </Menu.Item>
     <Menu.Item icon={<DeleteTwoTone twoToneColor="red"/>}>
