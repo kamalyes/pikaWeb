@@ -212,6 +212,7 @@ const Database = ({dispatch, gconfig, loading}) => {
       message: '请输入host',
       type: 'input',
       placeholder: '请输入host',
+      initialValue: '127.0.0.1',
     },
     {
       name: 'port',
@@ -220,11 +221,12 @@ const Database = ({dispatch, gconfig, loading}) => {
       message: '请输入port',
       type: 'input',
       placeholder: '请输入port',
+      initialValue: '3306',
     },
     {
       name: 'database',
       label: '库名',
-      required: true,
+      required: false,
       message: '请输入数据库名',
       type: 'input',
       placeholder: '请输入数据库名',
@@ -236,6 +238,7 @@ const Database = ({dispatch, gconfig, loading}) => {
       message: '请输入帐号',
       type: 'input',
       placeholder: '请输入帐号',
+      initialValue: 'root',
     },
     {
       name: 'password',
