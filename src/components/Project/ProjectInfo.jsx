@@ -21,7 +21,7 @@ export default ({data, users, reloadData}) => {
   };
 
   const opt = <Select placeholder='请选择项目组长' showSearch filterOption={(input, option) =>
-    option.children.props.user.name.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.children.props.user.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    option.children.props.user.username.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.children.props.user.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
   } allowClear>
     {
       users.map(item => <Option key={item.value} value={item.id}><Tooltip

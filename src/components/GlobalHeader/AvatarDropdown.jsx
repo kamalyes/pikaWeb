@@ -64,7 +64,7 @@ class AvatarDropdown extends React.Component {
         <span className={`${styles.action} ${styles.account}`}>
           <Avatar size="small" className={styles.avatar}
                   src={currentUser.avatar || `https://joeschmoe.io/api/v1/${currentUser.username}`} alt="avatar"/>
-          <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+          <span className={`${styles.name} anticon`}>{currentUser.username}</span>
         </span>
       </HeaderDropdown>
     ) : (

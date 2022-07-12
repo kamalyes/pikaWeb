@@ -46,9 +46,9 @@ const UserInfo = ({user, dispatch, loading}) => {
       key: 'id',
     },
     {
-      title: <span><UserOutlined/> 姓名</span>,
-      dataIndex: 'name',
-      key: 'name',
+      title: <span><UserOutlined/> 用户名</span>,
+      dataIndex: 'username',
+      key: 'username',
       render: (_, record) => <UserLink marginLeft={4} user={record}/>
     },
     {
@@ -110,7 +110,7 @@ const UserInfo = ({user, dispatch, loading}) => {
       fetchUserInfo()
       return;
     }
-    const temp = userList.filter(item => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.email.toLowerCase().indexOf(value.toLowerCase()) > -1)
+    const temp = userList.filter(item => item.username.toLowerCase().indexOf(value.toLowerCase()) > -1 || item.email.toLowerCase().indexOf(value.toLowerCase()) > -1)
     dispatch({
       type: 'user/save',
       payload: {
@@ -155,8 +155,8 @@ const UserInfo = ({user, dispatch, loading}) => {
       <Card>
         <Modal title="编辑用户" width={500} visible={modal} onCancel={() => setModal(false)} onOk={onSubmit}>
           <Form form={form} initialValues={record} {...CONFIG.LAYOUT}>
-            <Form.Item label="姓名" name="name">
-              <Input placeholder="输入用户姓名"/>
+            <Form.Item label="用户名" name="username">
+              <Input placeholder="输入用户用户名"/>
             </Form.Item>
             <Form.Item label="邮箱" name="email">
               <Input placeholder="输入用户邮箱"/>
@@ -173,7 +173,7 @@ const UserInfo = ({user, dispatch, loading}) => {
         <Row style={{marginBottom: 12}}>
           <Col span={18}/>
           <Col span={6}>
-            <Input.Search placeholder="输入用户邮箱或姓名" onChange={e => {
+            <Input.Search placeholder="输入用户邮箱或用户名" onChange={e => {
               onSearch(e.target.value)
             }}/>
           </Col>

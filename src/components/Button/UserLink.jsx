@@ -13,17 +13,17 @@ export default ({user, size = 24, marginLeft = 4}) => {
   return (
     <>
       <Avatar size={size} className={styles.avatar}
-              src={user.avatar || `${CONFIG.AVATAR_URL}${user.name}`} alt="avatar"/>
+              src={user.avatar || `${CONFIG.AVATAR_URL}${user.username}`} alt="avatar"/>
       <Tooltip title="点击可查看用户资料">
         {
           user.deleted_at ?
             <del><a style={{marginLeft: marginLeft, fontSize: 14, color: "#ccc"}} href={`/#/member/${user.id}`}
                     target="_blank"
-                    rel="noreferrer">{user.name}</a></del> :
+                    rel="noreferrer">{user.username}</a></del> :
             <a onClick={e => {
               e.stopPropagation();
             }} style={{marginLeft: marginLeft, fontSize: 14}} href={`/#/member/${user.id}`} target="_blank"
-               rel="noreferrer">{user.name}</a>
+               rel="noreferrer">{user.username}</a>
         }
 
       </Tooltip>

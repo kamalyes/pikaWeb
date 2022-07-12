@@ -193,11 +193,11 @@ const Login = (props) => {
                 prefix: <MobileOutlined className={styles.prefixIcon}/>,
               }}
               name="name"
-              placeholder="请输入姓名"
+              placeholder="请输入用户名"
               rules={[
                 {
                   required: true,
-                  message: "请输入姓名",
+                  message: "请输入用户名",
                 }
               ]}
             />

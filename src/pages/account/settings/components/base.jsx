@@ -96,11 +96,11 @@ const BaseView = ({user, loading, dispatch}) => {
               <ProFormText
                 width="md"
                 name="username"
-                label="姓名"
+                label="用户名"
                 rules={[
                   {
                     required: true,
-                    message: '请输入您的姓名!',
+                    message: '请输入您的用户名!',
                   },
                 ]}
               />

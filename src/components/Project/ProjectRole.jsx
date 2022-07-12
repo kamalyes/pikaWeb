@@ -108,7 +108,7 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
     ]
   }
   const opt = <Select placeholder="请选择用户" showSearch allowClear filterOption={(input, option) =>
-    option.children.props.user.name.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.children.props.user.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    option.children.props.user.username.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.children.props.user.email.toLowerCase().indexOf(input.toLowerCase()) >= 0
   }>
     {
       users.map(item => <Option value={item.id} key={item.id} disabled={item.id === project.owner}><UserLink
@@ -148,7 +148,7 @@ const ProjectRole = ({project, roles, users, fetchData}) => {
       <div style={{marginBottom: 16}}>
         <Button size="small" type="primary" onClick={() => setModal(true)}><PlusOutlined/>添加成员</Button>
         <Input.Search onSearch={onSearchRole} size="small" style={{float: 'right', marginRight: 8, width: 280}}
-                      placeholder="搜索用户邮箱/姓名"/>
+                      placeholder="搜索用户邮箱/用户名"/>
       </div>
       <div>
         <List
