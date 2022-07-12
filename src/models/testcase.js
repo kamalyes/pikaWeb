@@ -263,9 +263,7 @@ export default {
 
     * retryCase({payload}, {call, put}) {
       const res = yield call(retryCase, payload);
-      if (auth.response(res, true)) {
-        return res.data
-      }
+      return res.data
     },
 
     * onlinePyScript({payload}, {call, _}) {

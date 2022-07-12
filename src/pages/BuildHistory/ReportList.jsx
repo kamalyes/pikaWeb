@@ -96,11 +96,11 @@ const ReportList = ({user, report, loading, dispatch}) => {
       key: 'start_at',
       dataIndex: 'start_at',
     },
-    // {
-    //   title: '结束时间',
-    //   key: 'finish_at',
-    //   dataIndex: 'finished_at',
-    // },
+    {
+      title: '结束时间',
+      key: 'finish_at',
+      dataIndex: 'finished_at',
+    },
     {
       title: '任务状态',
       dataIndex: 'status',

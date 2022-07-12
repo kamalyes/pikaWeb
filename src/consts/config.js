@@ -43,7 +43,7 @@ export const CONFIG = {
     1: '组长',
     2: '超级管理员',
   },
-  USER_ROLE_TAG: {
+  USER_IDENTITY_TAG: {
     0: 'default',
     1: 'blue',
     2: 'success',

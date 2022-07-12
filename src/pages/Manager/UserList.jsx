@@ -58,14 +58,14 @@ const UserInfo = ({user, dispatch, loading}) => {
     },
     {
       title: '🎨 角色',
-      dataIndex: 'role',
-      key: 'role',
-      render: role => <Tag color={CONFIG.USER_ROLE_TAG[role]}>{CONFIG.USER_ROLE[role]}</Tag>
+      dataIndex: 'identity',
+      key: 'identity',
+      render: identity => <Tag color={CONFIG.USER_IDENTITY_TAG[identity]}>{CONFIG.USER_ROLE[identity]}</Tag>
     },
     {
       title: '上次登录',
-      dataIndex: 'last_login_at',
-      key: 'last_login_at',
+      dataIndex: 'last_login_date',
+      key: 'last_login_date',
     },
     {
       title: '🚫 是否可用',
@@ -161,7 +161,7 @@ const UserInfo = ({user, dispatch, loading}) => {
             <Form.Item label="邮箱" name="email">
               <Input placeholder="输入用户邮箱"/>
             </Form.Item>
-            <Form.Item label="角色" name="role">
+            <Form.Item label="角色" name="identity">
               <Select>
                 <Option key={0} value={0}>普通成员</Option>
                 <Option key={1} value={1}>组长</Option>

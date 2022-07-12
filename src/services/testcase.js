@@ -193,7 +193,7 @@ export async function onlinePyScript(params) {
 
 // 重试测试用例
 export async function retryCase(params) {
-  return request(`${CONFIG.URL}/request/retry`, {
+  return request(`${CONFIG.URL}/ask/request/retry`, {
     params,
     headers: auth.headers(),
   });

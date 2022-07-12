@@ -46,7 +46,6 @@ import NoRecord from "@/components/NotFound/NoRecord";
 import FormForModal from "@/components/PikaForm/FormForModal";
 import {IconFont} from "@/components/Icon/IconFont";
 import {CONFIG} from "@/consts/config";
-import auth from "@/utils/auth";
 import TestResult from "@/components/TestCase/TestResult";
 import UserLink from "@/components/Button/UserLink";
 import noResult from "@/assets/no_data.svg";
@@ -110,14 +109,14 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
       }
     })
     Modal.confirm({
-        title: '用例正在后台执行, 去报告页面查看任务状态🔔',
-        icon: <QuestionCircleOutlined/>,
-        onOk() {
-          window.open(`/#/record/list`)
-        },
-        onCancel() {
-        },
-      });
+      title: '用例正在后台执行, 去报告页面查看任务状态🔔',
+      icon: <QuestionCircleOutlined/>,
+      onOk() {
+        window.open(`/#/record/list`)
+      },
+      onCancel() {
+      },
+    });
   }
 
   const menu = record => (
@@ -142,6 +141,11 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
   );
 
   const columns = [
+    {
+      dataIndex: 'index',
+      valueType: 'indexBorder',
+      width: 49,
+    },
     {
       title: "名称",
       dataIndex: "name",
@@ -236,6 +240,9 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
           directory_id: currentDirectory[0],
           name: values.name || '',
           create_emp_no: values.create_emp_no !== null && values.create_emp_no !== undefined ? values.create_emp_no : '',
+          request_type: values.request_type || '',
+          priority: values.priority || '',
+          status: values.status || '',
         },
       })
     }
@@ -506,8 +513,12 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
                                               save({project_id: e})
                                             }
                                           }}
-                                          onSelect={e=>{setEditing(false)}}
-                                          onBlur={e => {setEditing(false)}}
+                                          onSelect={e => {
+                                            setEditing(false)
+                                          }}
+                                          onBlur={e => {
+                                            setEditing(false)
+                                          }}
                                           filterOption={(input, option) =>
                                             option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                                           }>
@@ -564,10 +575,24 @@ const TestCaseDirectory = ({testcase, gconfig, project, user, loading, dispatch}
                   currentDirectory.length > 0 ? <>
                     <Form form={form}>
                       <Row gutter={6}>
-
                         <Col span={8}>
                           <Form.Item label="用例名称"  {...layout} name="name">
                             <Input placeholder="输入用例名称"/>
+                          </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                          <Form.Item label="请求协议"  {...layout} name="request_type">
+                            <Input placeholder="输入请求协议"/>
+                          </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                          <Form.Item label="优先级"  {...layout} name="priority">
+                            <Input placeholder="输入用例名称"/>
+                          </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                          <Form.Item label="状态"  {...layout} name="status">
+                            <Input placeholder="输入状态"/>
                           </Form.Item>
                         </Col>
                         <Col span={8}>

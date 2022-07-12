@@ -133,7 +133,6 @@ const ReportDetail = ({dispatch, loading, user, gconfig}) => {
     setReportDetail(res.data.report);
     setPlanName(res.data.plan_name);
   }, [])
-
   const onHandleRetry = async record => {
     const retryResult = await dispatch({
       type: 'testcase/retryCase',

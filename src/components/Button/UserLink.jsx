@@ -16,7 +16,7 @@ export default ({user, size = 24, marginLeft = 4}) => {
               src={user.avatar || `${CONFIG.AVATAR_URL}${user.username}`} alt="avatar"/>
       <Tooltip title="点击可查看用户资料">
         {
-          user.deleted_at ?
+          user.is_delete ?
             <del><a style={{marginLeft: marginLeft, fontSize: 14, color: "#ccc"}} href={`/#/member/${user.id}`}
                     target="_blank"
                     rel="noreferrer">{user.username}</a></del> :
